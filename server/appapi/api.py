@@ -15,4 +15,4 @@ api = Blueprint('api', __name__)
 @api.route('/cards-info/', methods=['GET'])
 def getCardsInfo():
     cards = Card.query.all()
-    return jsonify({'cards': [r.to_dict() for r in cards]})
+    return jsonify({'cardsInfo': [card.to_dict() for card in cards]})

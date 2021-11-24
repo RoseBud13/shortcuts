@@ -1,9 +1,6 @@
 <template>
     <div class="home">
-        <div class="hidden-tools">
-            <button @click="getCardStyle">Get Cards</button>
-        </div>
-        <card-list v-if="showCards" :cards="cards"></card-list>
+        <card-list v-if="showCards" :cards="cardsData"></card-list>
     </div>
 </template>
 
@@ -17,22 +14,22 @@ export default {
     },
     data() {
         return {
-            showCards: false,
-            cards: [
+            showCards: true,
+            cardsData: []
                 // {
                 //     id: 1,
                 //     cardType: 'main',
                 //     cardStyle: {
                 //         cardBgColor: 'yellow',
                 //         cardBgOpacity: 0.5,
-                //         cardHeight: '200px'
+                //         cardHeight: '100px'
                 //     }
                 // },
                 // {
                 //     id: 2,
                 //     cardType: 'main',
                 //     cardStyle: {
-                //         cardBgColor: 'blue',
+                //         cardBgColor: 'red',
                 //         cardBgOpacity: 0.5,
                 //         cardHeight: '150px'
                 //     }
@@ -64,16 +61,19 @@ export default {
                 //         cardHeight: '300px'
                 //     }
                 // }
-            ],
         }
     },
     methods: {
         getCardStyle() {
             fetchCardStyle().then(response => {
-                this.cards = response.cards;
-                this.showCards = true;
-            })
+                this.cardsData = response.cardsInfo;
+            }).catch(error => {
+                console.log(error);
+            });
         }
+    },
+    created() {
+        this.getCardStyle();
     }
 }
 
@@ -82,8 +82,5 @@ export default {
 <style>
 .home {
     overflow: hidden;
-}
-.hidden-tools {
-    z-index: -1;
 }
 </style>

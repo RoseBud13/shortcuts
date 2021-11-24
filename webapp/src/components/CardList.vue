@@ -32,6 +32,7 @@ export default {
 <style>
 .card-list {
     align-items: center;
+    background-color: white;
 }
 .card-list, li, ol {
     list-style: none;
