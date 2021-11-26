@@ -1,20 +1,24 @@
 <template>
     <div class="home">
+        <welcome-page></welcome-page>
         <card-list v-if="showCards" :cards="cardsData"></card-list>
     </div>
 </template>
 
 <script>
+import WelcomePage from '../components/WelcomePage.vue'
 import CardList from "../components/CardList.vue"
-import { fetchCardStyle } from "../api"
+import { mapMutations } from "vuex";
+import { fetchCardStyle, fetchCar } from "../api"
 
 export default {
     components: {
+        WelcomePage,
         CardList
     },
     data() {
         return {
-            showCards: true,
+            showCards: false,
             cardsData: []
                 // {
                 //     id: 1,
@@ -64,16 +68,28 @@ export default {
         }
     },
     methods: {
+        ...mapMutations(['setVehicleModel']),
+
         getCardStyle() {
             fetchCardStyle().then(response => {
                 this.cardsData = response.cardsInfo;
             }).catch(error => {
                 console.log(error);
             });
+        },
+
+        getCar() {
+            fetchCar().then(response => {
+                var carModel = response.carModel;
+                this.setVehicleModel(carModel);
+            }).catch(error => {
+                console.log(error);
+            });
         }
     },
     created() {
-        this.getCardStyle();
+        // this.getCardStyle();
+        this.getCar();
     }
 }
 

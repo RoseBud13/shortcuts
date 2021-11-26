@@ -25,5 +25,8 @@ def create_app(app_name='SHORTCUTXXX'):
     from appapi.commands import cmd
     app.register_blueprint(cmd)
 
+    from appapi.apibox import apibox
+    app.register_blueprint(apibox)
+
     return app
    

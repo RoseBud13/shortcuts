@@ -33,6 +33,7 @@ export default {
 .card-list {
     align-items: center;
     background-color: white;
+    overflow: auto;
 }
 .card-list, li, ol {
     list-style: none;
