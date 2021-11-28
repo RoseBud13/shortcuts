@@ -15,6 +15,12 @@ from datetime import datetime
 apibox = Blueprint('apibox', __name__)
 
 
+def getDateTime():
+    time = datetime.now()
+    result = time.strftime("%c")
+    return result[:10]
+
+
 def getWeatherData():
     url = 'http://api.openweathermap.org/data/2.5/weather?q=Shanghai&appid=d3ecf245bbd4eeb839a74fc32c366394&units=metric'
     r = requests.get(url)

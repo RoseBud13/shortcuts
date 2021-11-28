@@ -11,7 +11,7 @@ from flask import Blueprint, jsonify
 import random
 
 from .models import db, Card
-from .apibox import getWeatherData
+from .apibox import getWeatherData, getDateTime
 from .volvo_connected_api import getVehicleModel
 
 
@@ -29,6 +29,12 @@ def getCar():
     carModel = random.choice(carList)
     print(carModel)
     return jsonify({'carModel': carModel})
+
+
+@api.route('/get-datetime/', methods=['GET'])
+def getDateInfo():
+    result = getDateTime()
+    return jsonify({'dateInfo': result})
 
 
 @api.route('/get-weather/', methods=['GET'])
