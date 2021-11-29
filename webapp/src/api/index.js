@@ -16,6 +16,14 @@ export function fetchCar(query) {
     })
 }
 
+export function getDateInfo(query) {
+    return request({
+        url: '/get-datetime/',
+        method: 'get',
+        params: query
+    })
+}
+
 export function getWeatherInfo(query) {
     return request({
         url: '/get-weather/',
