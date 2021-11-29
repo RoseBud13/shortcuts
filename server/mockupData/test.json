@@ -1,3 +1,37 @@
 {
-    "test": "test"
+    "id" : 1,
+    "data" :
+    {
+        "datetime" : "2021-1-1 15:00:00",
+        "location" :
+            {
+                "longitude": 11.9786903,
+                "latitude" : 57.6891181
+            },
+        "related_api" : []
+    },
+
+    "id" : 2,
+    "data" :
+    {
+        "datetime" : "2021-1-1 15:01:00",
+        "location" :
+            {
+                "longitude": 11.9786903,
+                "latitude" : 57.6891181
+            },
+        "related_api" : []
+    },
+
+    "id" : 3,
+    "data" :
+    {
+        "datetime" : "2021-1-1 15:02:00",
+        "location" :
+            {
+                "longitude": 11.9786903,
+                "latitude" : 57.6891181
+            },
+        "related_api" : []
+    }
 }

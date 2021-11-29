@@ -13,9 +13,31 @@ import random
 from .models import db, Card
 from .apibox import getWeatherData
 from .volvo_connected_api import getVehicleModel
+from .volvo_connected_api import getWindowStatus
+from .volvo_connected_api import getWarnings
+from .volvo_connected_api import getTyreStatus
+from .volvo_connected_api import getVehicleStat
+from .volvo_connected_api import getOdometer
+from .volvo_connected_api import getFuel
+from .volvo_connected_api import getEnvironment
+from .volvo_connected_api import getEngineDiagnostics
+from .volvo_connected_api import getDoorLock
+from .volvo_connected_api import getDiagnostic
+from .volvo_connected_api import getBrakeStatus
+from .volvo_connected_api import postClimatizationStart
+from .volvo_connected_api import postClimatizationStop
+from .volvo_connected_api import postEngineStart
+from .volvo_connected_api import postClimatizationStop
+from .volvo_connected_api import postFlash
+from .volvo_connected_api import postHonkFlash
+from .volvo_connected_api import postHonk
+from .volvo_connected_api import postLock
+from .volvo_connected_api import postUnlock
+from .volvo_connected_api import postNavigation
 
 
 api = Blueprint('api', __name__)
+
 
 @api.route('/cards-info/', methods=['GET'])
 def getCardsInfo():
@@ -43,3 +65,79 @@ def getVModel():
     result = getVehicleModel
     return jsonify(result)
 
+
+@api.route('/vcc-api-windowsStatus/', methods = ['GET'])
+def getWinStatus():
+    result = getWindowStatus()
+    return jsonify(result)
+
+
+@api.route('/vcc-api-key/', methods = ['GET'])
+def getWarnStatus():
+    result = getWarnings()
+    return jsonify(result)
+
+
+@api.route('/vcc-api-key/', methods = ['GET'])
+def getTyre():
+    result = getTyreStatus()
+    return jsonify(result)
+
+
+@api.route('/', methods = ['GET'])
+def getStat():
+    result = getVehicleStat()
+    return jsonify(result)
+
+
+@api.route('/', methods = ['GET'])
+def getOdo():
+    result = getOdometer()
+    return jsonify(result)
+
+
+@api.route('/', methods = ['GET'])
+def getFuelinfo():
+    result = getFuel()
+    return jsonify(result)
+
+
+@api.route('/', methods = ['GET'])
+def getFuelinfo():
+    result = getFuel()
+    return jsonify(result)
+
+
+@api.route('/', methods = ['GET'])
+def getEnvir():
+    result = getEnvironment()
+    return jsonify(result)
+
+
+@api.route('/', methods = ['GET'])
+def getEngDiag():
+    result = getEngineDiagnostics()
+    return jsonify(result)
+
+
+@api.route('/', methods = ['GET'])
+def getlock():
+    result = getDoorLock()
+    return jsonify(result)
+
+
+@api.route('/', methods = ['GET'])
+def getDiag():
+    result = getDiagnostic()
+    return jsonify(result)
+
+
+@api.route('/', methods = ['GET'])
+def getBrake():
+    result = getBrakeStatus()
+    return jsonify(result)
+
+@api.route('/', methods = ['GET'])
+def getBrake():
+    result = getBrakeStatus()
+    return jsonify(result)
