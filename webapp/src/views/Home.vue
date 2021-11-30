@@ -1,25 +1,31 @@
 <template>
     <div class="home">
         <welcome-page></welcome-page>
-        <card-list v-if="showCards" :cards="cardsData"></card-list>
+        <planet></planet>
+        <continent-detail></continent-detail>
+        <!-- <card-list v-if="showCards" :cards="cardsData"></card-list> -->
     </div>
 </template>
 
 <script>
 import WelcomePage from '../components/WelcomePage.vue'
 import CardList from "../components/CardList.vue"
+import Planet from '../components/Planet.vue'
+import ContinentDetail from '../components/ContinentDetail.vue'
 import { mapMutations } from "vuex";
 import { fetchCardStyle, fetchCar } from "../api"
 
 export default {
     components: {
         WelcomePage,
-        CardList
+        Planet,
+        ContinentDetail
+        //CardList
     },
     data() {
         return {
-            showCards: false,
-            cardsData: []
+            // showCards: false,
+            // cardsData: []
                 // {
                 //     id: 1,
                 //     cardType: 'main',
@@ -68,28 +74,28 @@ export default {
         }
     },
     methods: {
-        ...mapMutations(['setVehicleModel']),
+        // ...mapMutations(['setVehicleModel']),
 
-        getCardStyle() {
-            fetchCardStyle().then(response => {
-                this.cardsData = response.cardsInfo;
-            }).catch(error => {
-                console.log(error);
-            });
-        },
+        // getCardStyle() {
+        //     fetchCardStyle().then(response => {
+        //         this.cardsData = response.cardsInfo;
+        //     }).catch(error => {
+        //         console.log(error);
+        //     });
+        // },
 
-        getCar() {
-            fetchCar().then(response => {
-                var carModel = response.carModel;
-                this.setVehicleModel(carModel);
-            }).catch(error => {
-                console.log(error);
-            });
-        }
+        // getCar() {
+        //     fetchCar().then(response => {
+        //         var carModel = response.carModel;
+        //         this.setVehicleModel(carModel);
+        //     }).catch(error => {
+        //         console.log(error);
+        //     });
+        // }
     },
     created() {
         // this.getCardStyle();
-        this.getCar();
+        // this.getCar();
     }
 }
 
@@ -97,6 +103,9 @@ export default {
 
 <style>
 .home {
+    overflow: hidden;
+}
+.home body {
     overflow: hidden;
 }
 </style>

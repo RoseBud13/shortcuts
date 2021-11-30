@@ -1,10 +1,11 @@
 <template>
     <div class="main-card" :style="getCardStyle">
-
+        <p>{{ cardContent.content }}</p>
     </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
     props: {
         cardStyle: {
@@ -19,7 +20,8 @@ export default {
                 '--bg-opacity': this.cardStyle.cardBgOpacity,
                 '--card-height': this.cardStyle.cardHeight
             }
-        }
+        },
+        ...mapState(['cardContent'])
     }
 }
 
@@ -33,5 +35,9 @@ export default {
     width: 350px;
     border-radius: 20px;
     margin: 30px auto;
+    text-align: center;
+}
+.main-card p {
+    font-size: 30px;
 }
 </style>

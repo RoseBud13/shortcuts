@@ -37,7 +37,7 @@ body {
   user-select: none;
   -webkit-touch-callout: none;
   -webkit-tap-highlight-color: transparent;
-  /* overflow: hidden; */
+  overflow: hidden;
 }
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
@@ -45,6 +45,6 @@ body {
 }
 #app {
   height: 100%;
-  /* overflow: hidden; */
+  overflow: hidden;
 }
 </style>

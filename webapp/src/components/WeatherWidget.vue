@@ -81,7 +81,7 @@ export default {
 
 <style>
 .weather-widget {
-    z-index: 1;
+    z-index: 0;
     width: 280px;
     height: 70px;
     background-color: rgba(221, 166, 157, 0.3);
