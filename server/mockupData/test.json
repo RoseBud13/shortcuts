@@ -33,5 +33,17 @@
                 "latitude" : 57.6891181
             },
         "related_api" : []
+    },
+
+    "id" : 4,
+    "data" :
+    {
+        "datetime" : "",
+        "location" :
+        {
+            "longitude" : ,
+            "latitude" :
+        },
+        "related_api" : []
     }
 }
