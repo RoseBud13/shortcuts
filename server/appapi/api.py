@@ -7,13 +7,15 @@ Created by Xiong, Kaijie on 2021-11-24.
 Copyright © 2021 Xiong, Kaijie & Xu, Shuoni. All rights reserved.
 """
 
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, requests
 import random
+import requests
 
 from .models import db, Card
 from .apibox import getWeatherData, getDateTime
 from .volvo_connected_api import getVehicleModel, getWindowStatus, getWarnings, getTyreStatus, getVehicleStat, getOdometer, getFuel, getEnvironment, getEngineDiagnostics, getDoorLock, getDiagnostic, getBrakeStatus
 from .volvo_connected_api import postClimatizationStart, postClimatizationStop, postEngineStart, postFlash, postHonkFlash, postHonk, postLock, postUnlock, postNavigation
+
 
 
 api = Blueprint('api', __name__)
@@ -117,3 +119,58 @@ def getDiag():
 def getBrake():
     result = getBrakeStatus()
     return jsonify(result)
+
+
+@api.route('/post-climatization-start/', methods = ['POST'])
+def postClimStart():
+    status = postClimatizationStart()
+    return status
+
+
+@api.route('/post-climatization-stop', methods = ['POST'])
+def postClimStop():
+    status = postClimatizationStop()
+    return status
+
+
+@api.route('/post-engine-start', methods = ['POST'])
+def postEngStart():
+    status = postEngineStart()
+    return status
+
+
+@api.route('/post-engine-stop', methods = ['POST'])
+def postEngStop():
+    status = postEngineStop()
+    return status
+
+
+@api.route('/post-flash', methods = ['POST'])
+def postFla():
+    status = postFlash()
+    return status
+
+
+@api.route('/post-honkflash', methods = ['POST'])
+def postHonFla():
+    status = postHonkFlash()
+    return status
+
+
+@api.route('/post-honk', methods = ['POST'])
+def postHo():
+    status = postHonk()
+    return status
+
+
+@api.route('/post-lock', methods = ['POST'])
+def postLo():
+    status = postLock()
+    return status
+
+
+@api.route('/post-navigation', methods = ['POST'])
+def postNavi():
+    status = postNavigation()
+    return status
+

@@ -265,123 +265,127 @@ def getBrakeStatus():
 
 def postClimatizationStart():
     climatizationUrl = getVehicleVin().vehicleUrl + '/commands/climatization-start'
-    res = requests.get(climatizationUrl, hearders = "")
-    c_data = res.json()
+    API_KEY = ""
 
-    climatization_info = {}
+    c_data = None
 
-    climatization_info['status'] = c_data['async']['status']
+    res = requests.post(url = climatizationUrl, data = c_data)
+    action_url = res.text
 
-    return climatization_info
+    return action_url
 
 
 def postClimatizationStop():
     climatizationUrl = getVehicleVin().vehicleUrl + '/commands/climatization-stop'
-    res = requests.get(climatizationUrl, hearders = "")
-    c_data = res.json()
+    API_KEY = ""
 
-    climatization_info = {}
+    c_data = None
 
-    climatization_info['status'] = c_data['async']['status']
+    res = requests.post(url = climatizationUrl, data = c_data)
+    action_url = res.text
 
-    return climatization_info
+    return action_url
 
 
-def postEngineStart():
+def postEngineStart(runtimeMinute):
     engineUrl = getVehicleVin().vehicleUrl + '/commands/engine-start'
-    res = requests.get(engineUrl, headers = "")
-    e_data = res.json()
+    API_KEY = ""
 
-    engine_info = {}
+    e_data = {
+        "runtimeMinute" : runtimeMinute
+    }
 
-    engine_info['status'] = e_data['async']['status']
+    res = requests.post(url = engineUrl, data = e_data)
+    action_url = res.text
 
-    return engine_info
+    return action_url
 
 
 def postEngineStop():
     engineUrl = getVehicleVin().vehicleUrl + '/commands/engine-stop'
-    res = requests.get(engineUrl, headers="")
-    e_data = res.json()
 
-    engine_info = {}
+    e_data = None
 
-    engine_info['status'] = e_data['async']['status']
+    res = requests.post(url = engineUrl, data = e_data)
+    action_url = res.text
 
-    return engine_info
+    return action_url
 
 
+# Used to send a flash command to the vehicle. The vehicles turn signals will flash.
 def postFlash():
     flashUrl = getVehicleVin().vehicleUrl + '/commands/flash'
-    res = requests.get(flashUrl, headers = "")
-    f_data = res.json()
 
-    Flash_info = {}
-    Flash_info['status'] = f_data['async']['status']
+    f_data = None
 
-    return Flash_info
+    res = requests.post(url = flashUrl, data = f_data)
+    action_url = res.text
+
+    return action_url
 
 
 # Used to send a honk and flash command to the vehicle
 def postHonkFlash():
     hookflashUrl = getVehicleVin().vehicleUrl + '/commands/honk-flash'
-    res = requests.get(hookflashUrl, headers = "")
-    f_data = res.json()
 
-    HookFlash_info = {}
-    HookFlash_info['status'] = f_data['async']['status']
+    h_data = None
 
-    return HookFlash_info
+    res = requests.post(url = hookflashUrl, data = h_data)
+    action_url = res.text
+
+    return action_url
 
 
 # Used to send a honk command to the vehicle
 def postHonk():
     honkUrl = getVehicleVin().vehicleUrl + '/commands/honk'
-    res = requests.get(honkUrl, headers = "")
-    h_data = res.json()
 
-    Hook_info = {}
-    Hook_info['status'] = h_data['async']['status']
+    h_data = None
 
-    return Hook_info
+    res = requests.post(honkUrl, data = h_data)
+    action_url = res.text
+
+    return action_url
 
 
 def postLock():
     lockUrl = getVehicleVin().vehicleUrl + '/commands/lock'
-    res = requests.get(lockUrl, headers = "")
-    l_data = res.json()
 
-    Lock_info = {}
-    Lock_info['status'] = l_data['async']['status']
+    l_data = None
 
-    return Lock_info
+    res = requests.post(url = lockUrl, data = l_data)
+    action_url = res.text
+
+    return action_url
 
 
-def postUnlock():
+def postUnlock(unlockduration):
     unlockUrl = getVehicleVin().vehicleUrl + '/commands/unlock'
-    res = requests.get(unlockUrl, headers = "")
-    u_data = res.json()
 
-    Unlock_info = {}
-    Unlock_info['status'] = u_data['async']['status']
+    u_data = {
+        "unlockDuration" : unlockduration
+    }
 
-    return Unlock_info
+    res = requests.post(url = unlockUrl, data = u_data)
+    action_url = res.text
+
+    return action_url
 
 
-def postNavigation():
+def postNavigation(latitude, longitude, name, phone):
     navigationUrl = getVehicleVin().vehicleUrl + '/commands/navi-point-of-interest'
-    res = requests.get(navigationUrl, headers="")
-    n_data = res.json()
 
-    Navigation_info = {}
-    Navigation_info['status'] = n_data['async']['status']
+    n_data = {
+        "pointOfInterest" : {
+            "latitude" : latitude,
+            "longitude" : longitude,
+            "name" : name,
+            "phone" : phone
+        }
+    }
 
-    return Navigation_info
+    res = requests.post(url = navigationUrl, data = n_data)
+    action_url = res.text
 
-# def getCommandRequest():
-#     commandUrl = getVehicleVin().vehicleUrl + '/requests/'
-#     res = requests.get(commandUrl, headers = "")
-#     c_data = res.json()
-#
-#     Command_info = {}
+    return action_url
 

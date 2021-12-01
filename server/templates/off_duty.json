@@ -1,0 +1,23 @@
+{
+  "template_name" : "off_duty",
+  "step" : [
+    {
+      "step1" :
+        {
+          "function" : "getEnvir"
+        },
+      "step2" :
+        {
+          "function" : "postEngineStart"
+        },
+      "step3" :
+        {
+          "function" : "postClimatizationStart"
+        },
+      "step4" :
+        {
+          "function" : "postNavigation"
+        }
+    }
+  ]
+}

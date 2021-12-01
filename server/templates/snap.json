@@ -1,0 +1,19 @@
+{
+  "template_name" : "snap",
+  "step" : [
+    {
+      "step1" :
+        {
+          "function" : "postNavigation"
+        },
+      "step2" :
+        {
+          "function" : "postClimatizationStart"
+        },
+      "step3" :
+        {
+          "function" : "postEngineStop"
+        }
+    }
+  ]
+}
