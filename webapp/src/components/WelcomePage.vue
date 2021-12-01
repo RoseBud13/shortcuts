@@ -1,7 +1,7 @@
 <template>
     <div class="welcome-page">
         <div class="page-wrapper">
-            <p>{{ this.$store.state.vehicleModel }}</p>
+            <!-- <p>{{ this.$store.state.vehicleModel }}</p> -->
         </div>
         <weather-widget></weather-widget>
     </div>

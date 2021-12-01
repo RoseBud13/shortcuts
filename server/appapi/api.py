@@ -12,35 +12,10 @@ import random
 import requests
 
 from .models import db, Card
-<<<<<<< Updated upstream
-from .apibox import getWeatherData
-from .volvo_connected_api import getVehicleModel
-from .volvo_connected_api import getWindowStatus
-from .volvo_connected_api import getWarnings
-from .volvo_connected_api import getTyreStatus
-from .volvo_connected_api import getVehicleStat
-from .volvo_connected_api import getOdometer
-from .volvo_connected_api import getFuel
-from .volvo_connected_api import getEnvironment
-from .volvo_connected_api import getEngineDiagnostics
-from .volvo_connected_api import getDoorLock
-from .volvo_connected_api import getDiagnostic
-from .volvo_connected_api import getBrakeStatus
-from .volvo_connected_api import postClimatizationStart
-from .volvo_connected_api import postClimatizationStop
-from .volvo_connected_api import postEngineStart
-from .volvo_connected_api import postClimatizationStop
-from .volvo_connected_api import postFlash
-from .volvo_connected_api import postHonkFlash
-from .volvo_connected_api import postHonk
-from .volvo_connected_api import postLock
-from .volvo_connected_api import postUnlock
-from .volvo_connected_api import postNavigation
-=======
 from .apibox import getWeatherData, getDateTime
 from .volvo_connected_api import getVehicleModel, getWindowStatus, getWarnings, getTyreStatus, getVehicleStat, getOdometer, getFuel, getEnvironment, getEngineDiagnostics, getDoorLock, getDiagnostic, getBrakeStatus
-from .volvo_connected_api import postClimatizationStart, postClimatizationStop, postEngineStart, postEngineStop, postFlash, postHonkFlash, postHonk, postLock, postUnlock, postNavigation
->>>>>>> Stashed changes
+from .volvo_connected_api import postClimatizationStart, postClimatizationStop, postEngineStart, postFlash, postHonkFlash, postHonk, postLock, postUnlock, postNavigation
+
 
 
 api = Blueprint('api', __name__)
@@ -52,12 +27,19 @@ def getCardsInfo():
     return jsonify({'cardsInfo': [card.to_dict() for card in cards]})
 
 
+# for example
 @api.route('/car/', methods=['GET'])
 def getCar():
     carList = ['XC40', 'XC60']
     carModel = random.choice(carList)
     print(carModel)
     return jsonify({'carModel': carModel})
+
+
+@api.route('/get-datetime/', methods=['GET'])
+def getDateInfo():
+    result = getDateTime()
+    return jsonify({'dateInfo': result})
 
 
 @api.route('/get-weather/', methods=['GET'])
@@ -69,8 +51,8 @@ def getWeather():
 # for example
 @api.route('/get-v-model/', methods=['GET'])
 def getVModel():
-    result = getVehicleModel
-    return jsonify(result)
+    result = getVehicleModel()
+    return result
 
 
 @api.route('/vcc-api-windowsStatus/', methods = ['GET'])
@@ -91,65 +73,53 @@ def getTyre():
     return jsonify(result)
 
 
-@api.route('/', methods = ['GET'])
+@api.route('/get-v-stat/', methods = ['GET'])
 def getStat():
     result = getVehicleStat()
     return jsonify(result)
 
 
-@api.route('/', methods = ['GET'])
+@api.route('/get-odo/', methods = ['GET'])
 def getOdo():
     result = getOdometer()
     return jsonify(result)
 
 
-@api.route('/', methods = ['GET'])
+@api.route('/get-fuel-info/', methods = ['GET'])
 def getFuelinfo():
     result = getFuel()
     return jsonify(result)
 
 
-@api.route('/', methods = ['GET'])
-def getFuelinfo():
-    result = getFuel()
-    return jsonify(result)
-
-
-@api.route('/', methods = ['GET'])
+@api.route('/get-env-temp/', methods = ['GET'])
 def getEnvir():
     result = getEnvironment()
     return jsonify(result)
 
 
-@api.route('/', methods = ['GET'])
+@api.route('/get-eng-diag/', methods = ['GET'])
 def getEngDiag():
     result = getEngineDiagnostics()
     return jsonify(result)
 
 
-@api.route('/', methods = ['GET'])
-def getlock():
+@api.route('/get-door-lock-status/', methods = ['GET'])
+def getLockStatus():
     result = getDoorLock()
     return jsonify(result)
 
 
-@api.route('/', methods = ['GET'])
+@api.route('/get-v-diag/', methods = ['GET'])
 def getDiag():
     result = getDiagnostic()
     return jsonify(result)
 
 
-@api.route('/', methods = ['GET'])
+@api.route('/get-brake-status/', methods = ['GET'])
 def getBrake():
     result = getBrakeStatus()
     return jsonify(result)
 
-<<<<<<< Updated upstream
-@api.route('/', methods = ['GET'])
-def getBrake():
-    result = getBrakeStatus()
-    return jsonify(result)
-=======
 
 @api.route('/post-climatization-start/', methods = ['POST'])
 def postClimStart():
@@ -204,4 +174,3 @@ def postNavi():
     status = postNavigation()
     return status
 
->>>>>>> Stashed changes
