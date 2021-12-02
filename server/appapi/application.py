@@ -28,5 +28,11 @@ def create_app(app_name='SHORTCUTXXX'):
     from appapi.apibox import apibox
     app.register_blueprint(apibox)
 
+    from appapi.volvo_connected_api import connected_apibox
+    app.register_blueprint(connected_apibox)
+
+    from appapi.volvo_extended_api import extended_apibox
+    app.register_blueprint(extended_apibox)
+
     return app
    

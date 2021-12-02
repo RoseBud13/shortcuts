@@ -7,7 +7,6 @@ Copyright © 2021 Xiong, Kaijie & Xu, Shuoni. All rights reserved.
 """
 
 from flask import Blueprint, jsonify
-from flask.json import dumps 
 import requests
 import json
 from datetime import datetime
@@ -25,7 +24,7 @@ def getWeatherData():
     url = 'http://api.openweathermap.org/data/2.5/weather?q=Shanghai&appid=d3ecf245bbd4eeb839a74fc32c366394&units=metric'
     r = requests.get(url)
     raw_data = r.json()
-    # print(json.dumps(raw_data, indent=4, sort_keys=True))
+    print(json.dumps(raw_data, indent=4, sort_keys=True))
 
     data = {}
     weather_info = {}

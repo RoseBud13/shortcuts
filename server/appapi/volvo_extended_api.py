@@ -7,23 +7,29 @@ Copyright © 2021 Xiong, Kaijie & Xu, Shuoni. All rights reserved.
 """
 
 from flask import Blueprint, jsonify
-from flask.json import dumps
 import requests
-import json
-from datetime import datetime
+from .config import CredentialConfig
 
+extended_apibox = Blueprint('extended_apibox', __name__)
+
+headersInfo = {}
+
+credentialInfo = CredentialConfig()
+headersInfo['authorization'] = getattr(credentialInfo, 'token')
+headersInfo['vcc-api-key'] = getattr(credentialInfo, 'vcc_api_key')
 
 def get_avfuel_consum():
     avfuel_url = "https://api.volvocars.com/extended-vehicle/v1/vehicles/YV4952NA4F120DEMO/resources/averageFuelConsumption"
-    res = requests.get(avfuel_url, headers = "")
+    res = requests.get(avfuel_url, headers = headersInfo)
 
     a_data = res.json()
 
     return a_data
 
+
 def get_av_speed():
     avspeed_url = ""
-    res = requests.get(avspeed_url, headers = "")
+    res = requests.get(avspeed_url, headers = headersInfo)
 
     a_data = res.json()
 
@@ -31,7 +37,7 @@ def get_av_speed():
 
 def get_battery_remaining():
     batteryremain_url = ""
-    res = requests.get(batteryremain_url, headers = "")
+    res = requests.get(batteryremain_url, headers = headersInfo)
 
     b_data = res.json()
 
@@ -39,7 +45,7 @@ def get_battery_remaining():
 
 def get_brakefluid():
     brakefluid_url = ""
-    res = requests.get(brakefluid_url, headers = "")
+    res = requests.get(brakefluid_url, headers = headersInfo)
 
     b_data = res.json()
 
@@ -47,7 +53,7 @@ def get_brakefluid():
 
 def get_bulb_failure():
     bulbfailure_url = ""
-    res = requests.get(bulbfailure_url, headers = "")
+    res = requests.get(bulbfailure_url, headers = headersInfo)
 
     b_data = res.json()
 
@@ -57,7 +63,7 @@ def get_bulb_failure():
 
 def get_enginecoollevel():
     enginecoollevel_url = ""
-    res = requests.get(enginecoollevel_url, headers = "")
+    res = requests.get(enginecoollevel_url, headers = headersInfo)
 
     e_data = res.json()
 
@@ -65,7 +71,7 @@ def get_enginecoollevel():
 
 def get_enginecooltemp():
     enginecooltemp_url = ""
-    res = requests.get(enginecooltemp_url, headers = "")
+    res = requests.get(enginecooltemp_url, headers = headersInfo)
 
     e_data = res.json()
 
@@ -73,10 +79,8 @@ def get_enginecooltemp():
 
 def get_engineserhr():
     engineserhr_url = ""
-    res = requests.get(engineserhr_url, headers = "")
+    res = requests.get(engineserhr_url, headers = headersInfo)
 
     e_data = res.json()
 
     return e_data
-
-def

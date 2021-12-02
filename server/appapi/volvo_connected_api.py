@@ -6,50 +6,64 @@ Created by Xiong, Kaijie on 2021-11-26.
 Copyright © 2021 Xiong, Kaijie & Xu, Shuoni. All rights reserved.
 """
 
-from flask import Blueprint, jsonify
-from flask.json import dumps 
+
+from flask import Blueprint
 import requests
 import json
 from datetime import datetime
+from dateutil import parser
 
-apibox = Blueprint('apibox', __name__)
+from .config import CredentialConfig
 
+connected_apibox = Blueprint('connected_apibox', __name__)
+
+
+headersInfo = {}
+
+credentialInfo = CredentialConfig()
+headersInfo['authorization'] = getattr(credentialInfo, 'token')
+headersInfo['vcc-api-key'] = getattr(credentialInfo, 'vcc_api_key')
 
 # get Vin
 def getVehicleVin():
     url = 'https://api.volvocars.com/connected-vehicle/v1/vehicles'
-    r = requests.get(url, headers={'authorization': 'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IkpXVFNJR05FRENFUlQiLCJwaS5hdG0iOiI5cjdpIn0.eyJzY29wZSI6WyJjb252ZTpicmFrZV9zdGF0dXMiLCJjb252ZTpjbGltYXRpemF0aW9uX3N0YXJ0X3N0b3AiLCJjb252ZTpmdWVsX3N0YXR1cyIsImNvbnZlOmRvb3JzX3N0YXR1cyIsImNvbnZlOmVuZ2luZV9zdGFydF9zdG9wIiwiY29udmU6bG9jayIsImNvbnZlOmRpYWdub3N0aWNzX3dvcmtzaG9wIiwiY29udmU6dHJpcF9zdGF0aXN0aWNzIiwiY29udmU6ZW52aXJvbm1lbnQiLCJjb252ZTpvZG9tZXRlcl9zdGF0dXMiLCJjb252ZTpob25rX2ZsYXNoIiwiY29udmU6Y29tbWFuZF9hY2Nlc3NpYmlsaXR5IiwiY29udmU6ZW5naW5lX3N0YXR1cyIsImNvbnZlOnVubG9jayIsImNvbnZlOmNvbW1hbmRzIiwiY29udmU6bG9ja19zdGF0dXMiLCJjb252ZTp2ZWhpY2xlX3JlbGF0aW9uIiwiY29udmU6d2luZG93c19zdGF0dXMiLCJjb252ZTpuYXZpZ2F0aW9uIiwiY29udmU6dHlyZV9zdGF0dXMiLCJjb252ZTpjb25uZWN0aXZpdHlfc3RhdHVzIiwiY29udmU6ZGlhZ25vc3RpY3NfZW5naW5lX3N0YXR1cyIsImNvbnZlOndhcm5pbmdzIl0sImNsaWVudF9pZCI6ImRldmVsb3BlcnZjYXJzZG90Y29tIiwiZ3JudGlkIjoiN2tCWXFRUm9SaWt2cWcwczJIT3NmeDJYUGxvRTNJTDQiLCJpc3MiOiJodHRwczovL3ZvbHZvaWQuZXUudm9sdm9jYXJzLmNvbSIsImF1ZCI6ImRldmVsb3BlcnZjYXJzZG90Y29tIiwiZmlyc3ROYW1lIjoiQmFsYWppIE5hZ2FyYWogIiwibGFzdE5hbWUiOiJLdW1hciIsInN1YiI6IjkwYjRmNjlhLWE3ODUtNGUzNC1hZWUxLTA2OGNkYzYwYjNmYiIsInNjb3BlcyI6WyJjb252ZTpicmFrZV9zdGF0dXMiLCJjb252ZTpjbGltYXRpemF0aW9uX3N0YXJ0X3N0b3AiLCJjb252ZTpmdWVsX3N0YXR1cyIsImNvbnZlOmRvb3JzX3N0YXR1cyIsImNvbnZlOmVuZ2luZV9zdGFydF9zdG9wIiwiY29udmU6bG9jayIsImNvbnZlOmRpYWdub3N0aWNzX3dvcmtzaG9wIiwiY29udmU6dHJpcF9zdGF0aXN0aWNzIiwiY29udmU6ZW52aXJvbm1lbnQiLCJjb252ZTpvZG9tZXRlcl9zdGF0dXMiLCJjb252ZTpob25rX2ZsYXNoIiwiY29udmU6Y29tbWFuZF9hY2Nlc3NpYmlsaXR5IiwiY29udmU6ZW5naW5lX3N0YXR1cyIsImNvbnZlOnVubG9jayIsImNvbnZlOmNvbW1hbmRzIiwiY29udmU6bG9ja19zdGF0dXMiLCJjb252ZTp2ZWhpY2xlX3JlbGF0aW9uIiwiY29udmU6d2luZG93c19zdGF0dXMiLCJjb252ZTpuYXZpZ2F0aW9uIiwiY29udmU6dHlyZV9zdGF0dXMiLCJjb252ZTpjb25uZWN0aXZpdHlfc3RhdHVzIiwiY29udmU6ZGlhZ25vc3RpY3NfZW5naW5lX3N0YXR1cyIsImNvbnZlOndhcm5pbmdzIl0sImVtYWlsIjoiYmFsYWppLnZvbHZvY2Fyc0BnbWFpbC5jb20iLCJleHAiOjE2MzgyNzE0MzZ9.lIwK-RQO7VUG7IYLyCBhSQfRpmaRg7tIih3wgHCaEmCrNrK6BO8tSE9vaT9nxQNTWM1OcOmR5d52Eki4WoSyrowHJL06VFz3KJlkO6aWlQbh-gtgZaH-yBvB0twJhe7nRZINt-1vpfTc5nVNCh_V9hMzB4RJHgly-MhXzDcBkGyVfVp1r9gUX9R8gTdcwzErR-qFCJoS60L4xsSMniWNBe_8NBWfb3sru2Bm3GXCTUXoFexSqffivHFkYJShddT4lIEdrYrWg6E81v180jcSBPfW0m3TU4R-Z_-hy4UWTJegaK06xXZU1TxG54iazgBKfiGBf0-FAiEbVxWKubLZFw'})
+
+    print(headersInfo)
+
+    r = requests.get(url, headers = headersInfo)
     raw_data = r.json()
     print(json.dumps(raw_data, indent=4, sort_keys=True))
 
-    vehicleVin = raw_data['data']['vin']
+    vehicleVin = raw_data['data'][0]['vin']
     vehicleUrl = 'https://api.volvocars.com/connected-vehicle/v1/vehicles/' + vehicleVin
 
     return vehicleUrl
 
 # get vehicle model
 def getVehicleModel():
-    detailsUrl = getVehicleVin().vehicleUrl
-    res = requests.get(detailsUrl, headers ={'authorization': 'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IkpXVFNJR05FRENFUlQiLCJwaS5hdG0iOiI5cjdpIn0.eyJzY29wZSI6WyJjb252ZTpicmFrZV9zdGF0dXMiLCJjb252ZTpjbGltYXRpemF0aW9uX3N0YXJ0X3N0b3AiLCJjb252ZTpmdWVsX3N0YXR1cyIsImNvbnZlOmRvb3JzX3N0YXR1cyIsImNvbnZlOmVuZ2luZV9zdGFydF9zdG9wIiwiY29udmU6bG9jayIsImNvbnZlOmRpYWdub3N0aWNzX3dvcmtzaG9wIiwiY29udmU6dHJpcF9zdGF0aXN0aWNzIiwiY29udmU6ZW52aXJvbm1lbnQiLCJjb252ZTpvZG9tZXRlcl9zdGF0dXMiLCJjb252ZTpob25rX2ZsYXNoIiwiY29udmU6Y29tbWFuZF9hY2Nlc3NpYmlsaXR5IiwiY29udmU6ZW5naW5lX3N0YXR1cyIsImNvbnZlOnVubG9jayIsImNvbnZlOmNvbW1hbmRzIiwiY29udmU6bG9ja19zdGF0dXMiLCJjb252ZTp2ZWhpY2xlX3JlbGF0aW9uIiwiY29udmU6d2luZG93c19zdGF0dXMiLCJjb252ZTpuYXZpZ2F0aW9uIiwiY29udmU6dHlyZV9zdGF0dXMiLCJjb252ZTpjb25uZWN0aXZpdHlfc3RhdHVzIiwiY29udmU6ZGlhZ25vc3RpY3NfZW5naW5lX3N0YXR1cyIsImNvbnZlOndhcm5pbmdzIl0sImNsaWVudF9pZCI6ImRldmVsb3BlcnZjYXJzZG90Y29tIiwiZ3JudGlkIjoiN2tCWXFRUm9SaWt2cWcwczJIT3NmeDJYUGxvRTNJTDQiLCJpc3MiOiJodHRwczovL3ZvbHZvaWQuZXUudm9sdm9jYXJzLmNvbSIsImF1ZCI6ImRldmVsb3BlcnZjYXJzZG90Y29tIiwiZmlyc3ROYW1lIjoiQmFsYWppIE5hZ2FyYWogIiwibGFzdE5hbWUiOiJLdW1hciIsInN1YiI6IjkwYjRmNjlhLWE3ODUtNGUzNC1hZWUxLTA2OGNkYzYwYjNmYiIsInNjb3BlcyI6WyJjb252ZTpicmFrZV9zdGF0dXMiLCJjb252ZTpjbGltYXRpemF0aW9uX3N0YXJ0X3N0b3AiLCJjb252ZTpmdWVsX3N0YXR1cyIsImNvbnZlOmRvb3JzX3N0YXR1cyIsImNvbnZlOmVuZ2luZV9zdGFydF9zdG9wIiwiY29udmU6bG9jayIsImNvbnZlOmRpYWdub3N0aWNzX3dvcmtzaG9wIiwiY29udmU6dHJpcF9zdGF0aXN0aWNzIiwiY29udmU6ZW52aXJvbm1lbnQiLCJjb252ZTpvZG9tZXRlcl9zdGF0dXMiLCJjb252ZTpob25rX2ZsYXNoIiwiY29udmU6Y29tbWFuZF9hY2Nlc3NpYmlsaXR5IiwiY29udmU6ZW5naW5lX3N0YXR1cyIsImNvbnZlOnVubG9jayIsImNvbnZlOmNvbW1hbmRzIiwiY29udmU6bG9ja19zdGF0dXMiLCJjb252ZTp2ZWhpY2xlX3JlbGF0aW9uIiwiY29udmU6d2luZG93c19zdGF0dXMiLCJjb252ZTpuYXZpZ2F0aW9uIiwiY29udmU6dHlyZV9zdGF0dXMiLCJjb252ZTpjb25uZWN0aXZpdHlfc3RhdHVzIiwiY29udmU6ZGlhZ25vc3RpY3NfZW5naW5lX3N0YXR1cyIsImNvbnZlOndhcm5pbmdzIl0sImVtYWlsIjoiYmFsYWppLnZvbHZvY2Fyc0BnbWFpbC5jb20iLCJleHAiOjE2MzgyNzE0MzZ9.lIwK-RQO7VUG7IYLyCBhSQfRpmaRg7tIih3wgHCaEmCrNrK6BO8tSE9vaT9nxQNTWM1OcOmR5d52Eki4WoSyrowHJL06VFz3KJlkO6aWlQbh-gtgZaH-yBvB0twJhe7nRZINt-1vpfTc5nVNCh_V9hMzB4RJHgly-MhXzDcBkGyVfVp1r9gUX9R8gTdcwzErR-qFCJoS60L4xsSMniWNBe_8NBWfb3sru2Bm3GXCTUXoFexSqffivHFkYJShddT4lIEdrYrWg6E81v180jcSBPfW0m3TU4R-Z_-hy4UWTJegaK06xXZU1TxG54iazgBKfiGBf0-FAiEbVxWKubLZFw'})
+    detailsUrl = getVehicleVin()
+    res = requests.get(detailsUrl, headers = headersInfo)
     v_data = res.json()
+    print(json.dumps(v_data, indent=4, sort_keys=True))
 
-    vehicleModel = v_data['descriptions']['model']
+    vehicleModel = v_data['data']['descriptions']['model']
     
     return vehicleModel
 
 
 # Endpoint used to get Vehicle's Latest Window Status Values
 def getWindowStatus():
-    windowUrl = getVehicleVin().vehicleUrl + '/windows'
-    res = requests.get(windowUrl, headers = "")
+    windowUrl = getVehicleVin() + '/windows'
+    res = requests.get(windowUrl, headers = headersInfo)
     w_data = res.json()
+    print(json.dumps(w_data, indent=4, sort_keys=True))
 
     Window_info = {}
 
-    window_timestamp = datetime.fromtimestamp(w_data['data']['frontLeft']['timestamp'])
-    date = window_timestamp.strftime("%m/%d/%Y, %H:%M:%S")
+    # window_timestamp = datetime.fromtimestamp(w_data['data']['frontLeft']['timestamp'])
+    # date = window_timestamp.strftime("%m/%d/%Y, %H:%M:%S")
 
-    Window_info['date'] = date
+    Window_info['date'] = parser.parse(w_data['data']['frontLeft']['timestamp'])
     Window_info['frontLeft'] = w_data['data']['frontLeft']['value']
     Window_info['frontRight'] = w_data['data']['frontRight']['value']
     Window_info['rearLeft'] = w_data['data']['rearLeft']['value']
@@ -60,16 +74,16 @@ def getWindowStatus():
 
 # Used to get the vehicle data grouped under warning category such as bulb failure.
 def getWarnings():
-    warningUrl = getVehicleVin().vehicleUrl + '/warnings'
-    res = requests.get(warningUrl, headers = "")
+    warningUrl = getVehicleVin() + '/warnings'
+    res = requests.get(warningUrl, headers = headersInfo)
     w_data = res.json()
 
     Warning_info = {}
 
-    warning_timestamp = datetime.fromtimestamp(w_data['data']['bulbFailure']['timestamp'])
-    date = warning_timestamp.strftime("%m/%d/%Y, %H:%M:%S")
+    # warning_timestamp = datetime.fromtimestamp(w_data['data']['bulbFailure']['timestamp'])
+    # date = warning_timestamp.strftime("%m/%d/%Y, %H:%M:%S")
 
-    Warning_info['date'] = date
+    Warning_info['date'] = parser.parse(w_data['data']['bulbFailure']['timestamp'])
     Warning_info['bulbFailure'] = w_data['data']['bulbFailure']['value']
 
     return Warning_info
@@ -77,16 +91,16 @@ def getWarnings():
 
 # Endpoint used to get Vehicle's Latest Tyre Status Values
 def getTyreStatus():
-    tyreUrl = getVehicleVin().vehicleUrl + '/tyres'
-    res = requests.get(tyreUrl, headers = "")
+    tyreUrl = getVehicleVin() + '/tyres'
+    res = requests.get(tyreUrl, headers = headersInfo)
     t_data = res.json()
 
     Tyre_info = {}
 
-    tyre_timestamp = datetime.fromtimestamp(t_data['data']['frontLeft']['timestamp'])
-    date = tyre_timestamp.strftime("%m/%d/%Y, %H:%M:%S")
+    # tyre_timestamp = datetime.fromtimestamp(t_data['data']['frontLeft']['timestamp'])
+    # date = tyre_timestamp.strftime("%m/%d/%Y, %H:%M:%S")
 
-    Tyre_info['date'] = date
+    Tyre_info['date'] = parser.parse(t_data['data']['frontLeft']['timestamp'])
     Tyre_info['frontLeft'] = t_data['data']['frontLeft']['value']
     Tyre_info['frontRight'] = t_data['data']['frontRight']['value']
     Tyre_info['rearLeft'] = t_data['data']['rearLeft']['value']
@@ -97,8 +111,8 @@ def getTyreStatus():
 
 # get vehicle values grouped under the category of statistics
 def getVehicleStat():
-    statUrl = getVehicleVin().vehicleUrl + '/statistics'
-    res = requests.get(statUrl, headers = "")
+    statUrl = getVehicleVin() + '/statistics'
+    res = requests.get(statUrl, headers = headersInfo)
     s_data = res.json()
 
     Vehicle_info = {}
@@ -107,8 +121,8 @@ def getVehicleStat():
     tripMeter1 = {}
     tripMeter2 = {}
 
-    date_timestamp = datetime.fromtimestamp(s_data['data']['averageFuelConsumption']['timestamp'])
-    date = date_timestamp.strftime("%m/%d/%Y, %H:%M:%S")
+    # date_timestamp = datetime.fromtimestamp(s_data['data']['averageFuelConsumption']['timestamp'])
+    # date = date_timestamp.strftime("%m/%d/%Y, %H:%M:%S")
 
     averageFuelConsumption['value'] = s_data['data']['averageFuelConsumption']['value']
     averageFuelConsumption['unit'] = s_data['data']['averageFuelConsumption']['unit']
@@ -126,73 +140,73 @@ def getVehicleStat():
     Vehicle_info['averageSpeed'] = averageSpeed
     Vehicle_info['tripMeter1'] = tripMeter1
     Vehicle_info['tripMeter2'] = tripMeter2
-    Vehicle_info['date'] = date
+    Vehicle_info['date'] = parser.parse(s_data['data']['averageFuelConsumption']['timestamp'])
 
     return Vehicle_info
 
 
 # Endpoint used to read vehicle's latest odometer value in kilometers
 def getOdometer():
-    OdometerUrl = getVehicleVin().vehicleUrl + '/odometer'
-    res = requests.get(OdometerUrl, headers = "")
+    OdometerUrl = getVehicleVin() + '/odometer'
+    res = requests.get(OdometerUrl, headers = headersInfo)
     o_data = res.json()
 
     Odometer_info = {}
 
-    date_timestamp = datetime.fromtimestamp(o_data['data']['odometer']['timestamp'])
-    date = date_timestamp.strftime("%m/%d/%Y, %H:%M:%S")
+    # date_timestamp = datetime.fromtimestamp(o_data['data']['odometer']['timestamp'])
+    # date = date_timestamp.strftime("%m/%d/%Y, %H:%M:%S")
 
     Odometer_info['value'] = o_data['data']['odometer']['value']
-    Odometer_info['date'] = date
+    Odometer_info['date'] = parser.parse(o_data['data']['odometer']['timestamp'])
 
     return Odometer_info
 
 
 # get vehicle's latest fuel amount in liters
 def getFuel():
-    fuelUrl = getVehicleVin().vehicleUrl + '/fuel'
-    res = requests.get(fuelUrl, headers = "")
+    fuelUrl = getVehicleVin() + '/fuel'
+    res = requests.get(fuelUrl, headers = headersInfo)
     f_data = res.json()
 
     Fuel_info = {}
 
-    date_timestamp = datetime.fromtimestamp(f_data['data']['fuelAmount']['timestamp'])
-    date = date_timestamp.strftime("%m/%d/%Y, %H:%M:%S")
+    # date_timestamp = datetime.fromtimestamp(f_data['data']['fuelAmount']['timestamp'])
+    # date = date_timestamp.strftime("%m/%d/%Y, %H:%M:%S")
 
     Fuel_info['value'] = f_data['data']['fuelAmount']['value']
-    Fuel_info['date'] = date
+    Fuel_info['date'] = parser.parse(f_data['data']['fuelAmount']['timestamp'])
 
     return Fuel_info
 
 
 # Environment Values such as external temperature collected by means of Vehicle sensors
 def getEnvironment():
-    tempUrl = getVehicleVin().vehicleUrl + '/environment'
-    res = requests.get(tempUrl, headers = "")
+    tempUrl = getVehicleVin() + '/environment'
+    res = requests.get(tempUrl, headers = headersInfo)
     t_data = res.json()
 
     Environment_info = {}
 
-    date_timestamp = datetime.fromtimestamp(t_data['data']['externalTemp']['timestamp'])
-    date = date_timestamp.strftime("%m/%d/%Y, %H:%M:%S")
+    # date_timestamp = datetime.fromtimestamp(t_data['data']['externalTemp']['timestamp'])
+    # date = date_timestamp.strftime("%m/%d/%Y, %H:%M:%S")
 
     Environment_info['value'] = t_data['data']['externalTemp']['value']
-    Environment_info['date'] = date
+    Environment_info['date'] = parser.parse(t_data['data']['externalTemp']['value'])
     return Environment_info
 
 
 # Vehicle's latest engine diagnostic values such as engine-coolant-level, oil level etc.
 def getEngineDiagnostics():
-    engineUrl = getVehicleVin().vehicleUrl + '/engine'
-    res = requests.get(engineUrl, headers = "")
+    engineUrl = getVehicleVin() + '/engine'
+    res = requests.get(engineUrl, headers = headersInfo)
     e_data = res.json()
 
     Diagnostics_info = {}
 
-    date_timestamp = datetime.fromtimestamp(e_data['data']['engineRunning']['timestamp'])
-    date = date_timestamp.strftime("%m/%d/%Y, %H:%M:%S")
+    # date_timestamp = datetime.fromtimestamp(e_data['data']['engineRunning']['timestamp'])
+    # date = date_timestamp.strftime("%m/%d/%Y, %H:%M:%S")
 
-    Diagnostics_info['date'] = date
+    Diagnostics_info['date'] = parser.parse(e_data['data']['engineRunning']['timestamp'])
     Diagnostics_info['engineRunning'] = e_data['data']['engineRunning']['value']
     Diagnostics_info['oilPressure'] = e_data['data']['oilPressure']['value']
     Diagnostics_info['engineCoolantLevel'] = e_data['data']['engineCoolantLevel']['value']
@@ -204,16 +218,16 @@ def getEngineDiagnostics():
 
 # Vehicle's door and lock status values
 def getDoorLock():
-    statusUrl = getVehicleVin().vehicleUrl + '/doors'
-    res = requests.get(statusUrl, headers = "")
+    statusUrl = getVehicleVin() + '/doors'
+    res = requests.get(statusUrl, headers = headersInfo)
     s_data = res.json()
 
     DoorLock_info = {}
 
-    date_timestamp = datetime.fromtimestamp(s_data['data']['carLocked']['timestamp'])
-    date = date_timestamp.strftime("%m/%d/%Y, %H:%M:%S")
+    # date_timestamp = datetime.fromtimestamp(s_data['data']['carLocked']['timestamp'])
+    # date = date_timestamp.strftime("%m/%d/%Y, %H:%M:%S")
 
-    DoorLock_info['date'] = date
+    DoorLock_info['date'] = parser.parse(s_data['data']['carLocked']['timestamp'])
     DoorLock_info['lock'] = s_data['data']['carLocked']['value']
     DoorLock_info['frontLeft'] = s_data['data']['frontLeft']['value']
     DoorLock_info['frontRight'] = s_data['data']['frontRight']['value']
@@ -226,16 +240,16 @@ def getDoorLock():
 
 # Used to get the vehicle values grouped under diagnostic category
 def getDiagnostic():
-    diagnosticUrl = getVehicleVin().vehicleUrl + '/diagnostics'
-    res = requests.get(diagnosticUrl, headers = "")
+    diagnosticUrl = getVehicleVin() + '/diagnostics'
+    res = requests.get(diagnosticUrl, headers = headersInfo)
     d_data = res.json()
 
     Diagnostic_info = {}
 
-    date_timestamp = datetime.fromtimestamp(d_data['data']['serviceStatus']['timestamp'])
-    date = date_timestamp.strftime("%m/%d/%Y, %H:%M:%S")
+    # date_timestamp = datetime.fromtimestamp(d_data['data']['serviceStatus']['timestamp'])
+    # date = date_timestamp.strftime("%m/%d/%Y, %H:%M:%S")
 
-    Diagnostic_info['date'] = date
+    Diagnostic_info['date'] = parser.parse(d_data['data']['serviceStatus']['timestamp'])
     Diagnostic_info['serviceStatus'] = d_data['data']['serviceStatus']['value']
     Diagnostic_info['serviceTrigger'] = d_data['data']['serviceTrigger']['value']
     Diagnostic_info['engineHoursToService'] = d_data['data']['engineHoursToService']['value']
@@ -249,23 +263,23 @@ def getDiagnostic():
 
 # Used to get the vehicle values grouped under brake category
 def getBrakeStatus():
-    brakeUrl = getVehicleVin().vehicleUrl + '/brakes'
-    res = requests.get(brakeUrl, headers = "")
+    brakeUrl = getVehicleVin() + '/brakes'
+    res = requests.get(brakeUrl, headers = headersInfo)
     b_data = res.json()
 
     brake_info = {}
 
-    date_timestamp = datetime.fromtimestamp(b_data['data']['brakeFluid']['value'])
-    date = date_timestamp.strftime("%m/%d/%Y, %H:%M:%S")
+    # date_timestamp = datetime.fromtimestamp(b_data['data']['brakeFluid']['timestamp'])
+    # date = date_timestamp.strftime("%m/%d/%Y, %H:%M:%S")
 
     brake_info['brakeFluid'] = b_data['data']['brakeFluid']['value']
-    brake_info['date'] = date
+    brake_info['date'] = parser.parse(b_data['data']['brakeFluid']['timestamp'])
 
     return brake_info
 
 def postClimatizationStart():
-    climatizationUrl = getVehicleVin().vehicleUrl + '/commands/climatization-start'
-    API_KEY = ""
+    climatizationUrl = getVehicleVin() + '/commands/climatization-start'
+    API_KEY = headersInfo
 
     c_data = None
 
@@ -276,8 +290,8 @@ def postClimatizationStart():
 
 
 def postClimatizationStop():
-    climatizationUrl = getVehicleVin().vehicleUrl + '/commands/climatization-stop'
-    API_KEY = ""
+    climatizationUrl = getVehicleVin() + '/commands/climatization-stop'
+    API_KEY = headersInfo
 
     c_data = None
 
@@ -288,8 +302,8 @@ def postClimatizationStop():
 
 
 def postEngineStart(runtimeMinute):
-    engineUrl = getVehicleVin().vehicleUrl + '/commands/engine-start'
-    API_KEY = ""
+    engineUrl = getVehicleVin() + '/commands/engine-start'
+    API_KEY = headersInfo
 
     e_data = {
         "runtimeMinute" : runtimeMinute
@@ -302,7 +316,7 @@ def postEngineStart(runtimeMinute):
 
 
 def postEngineStop():
-    engineUrl = getVehicleVin().vehicleUrl + '/commands/engine-stop'
+    engineUrl = getVehicleVin() + '/commands/engine-stop'
 
     e_data = None
 
@@ -314,7 +328,7 @@ def postEngineStop():
 
 # Used to send a flash command to the vehicle. The vehicles turn signals will flash.
 def postFlash():
-    flashUrl = getVehicleVin().vehicleUrl + '/commands/flash'
+    flashUrl = getVehicleVin() + '/commands/flash'
 
     f_data = None
 
@@ -326,7 +340,7 @@ def postFlash():
 
 # Used to send a honk and flash command to the vehicle
 def postHonkFlash():
-    hookflashUrl = getVehicleVin().vehicleUrl + '/commands/honk-flash'
+    hookflashUrl = getVehicleVin() + '/commands/honk-flash'
 
     h_data = None
 
@@ -338,7 +352,7 @@ def postHonkFlash():
 
 # Used to send a honk command to the vehicle
 def postHonk():
-    honkUrl = getVehicleVin().vehicleUrl + '/commands/honk'
+    honkUrl = getVehicleVin() + '/commands/honk'
 
     h_data = None
 
@@ -349,7 +363,7 @@ def postHonk():
 
 
 def postLock():
-    lockUrl = getVehicleVin().vehicleUrl + '/commands/lock'
+    lockUrl = getVehicleVin() + '/commands/lock'
 
     l_data = None
 
@@ -360,7 +374,7 @@ def postLock():
 
 
 def postUnlock(unlockduration):
-    unlockUrl = getVehicleVin().vehicleUrl + '/commands/unlock'
+    unlockUrl = getVehicleVin() + '/commands/unlock'
 
     u_data = {
         "unlockDuration" : unlockduration
@@ -373,7 +387,7 @@ def postUnlock(unlockduration):
 
 
 def postNavigation(latitude, longitude, name, phone):
-    navigationUrl = getVehicleVin().vehicleUrl + '/commands/navi-point-of-interest'
+    navigationUrl = getVehicleVin() + '/commands/navi-point-of-interest'
 
     n_data = {
         "pointOfInterest" : {

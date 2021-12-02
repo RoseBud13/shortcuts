@@ -7,15 +7,14 @@ Created by Xiong, Kaijie on 2021-11-24.
 Copyright © 2021 Xiong, Kaijie & Xu, Shuoni. All rights reserved.
 """
 
-from flask import Blueprint, jsonify, requests
+from flask import Blueprint, jsonify
 import random
 import requests
 
 from .models import db, Card
 from .apibox import getWeatherData, getDateTime
 from .volvo_connected_api import getVehicleModel, getWindowStatus, getWarnings, getTyreStatus, getVehicleStat, getOdometer, getFuel, getEnvironment, getEngineDiagnostics, getDoorLock, getDiagnostic, getBrakeStatus
-from .volvo_connected_api import postClimatizationStart, postClimatizationStop, postEngineStart, postFlash, postHonkFlash, postHonk, postLock, postUnlock, postNavigation
-
+from .volvo_connected_api import postClimatizationStart, postClimatizationStop, postEngineStart, postFlash, postHonkFlash, postHonk, postLock, postUnlock, postNavigation, postEngineStop
 
 
 api = Blueprint('api', __name__)
@@ -55,19 +54,19 @@ def getVModel():
     return result
 
 
-@api.route('/vcc-api-windowsStatus/', methods = ['GET'])
+@api.route('/get-windows-status/', methods = ['GET'])
 def getWinStatus():
     result = getWindowStatus()
     return jsonify(result)
 
 
-@api.route('/vcc-api-key/', methods = ['GET'])
+@api.route('/get-warning/', methods = ['GET'])
 def getWarnStatus():
     result = getWarnings()
     return jsonify(result)
 
 
-@api.route('/vcc-api-key/', methods = ['GET'])
+@api.route('/get-tyre/', methods = ['GET'])
 def getTyre():
     result = getTyreStatus()
     return jsonify(result)
