@@ -84,7 +84,7 @@ export default {
     z-index: 0;
     width: 280px;
     height: 70px;
-    background-color: rgba(200, 201, 199, 0.7);
+    background-color: rgba(168, 218, 220, 0.8);
     border-radius: 10px;
     position: fixed;
     top: 50px;

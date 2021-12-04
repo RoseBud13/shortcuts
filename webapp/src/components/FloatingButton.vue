@@ -2,7 +2,7 @@
   <transition name="grow">
     <button
       class="floating-button"
-      v-if="!!selected"
+      v-if="!!selected && !!editorType"
       :class="{ 'floating-button__editing': !!editing }"
       :style="{ background: gradientColor }"
       @click="toggleEditing"
@@ -14,7 +14,7 @@
 import { mapState, mapGetters, mapMutations } from 'vuex'
 export default {
   computed: {
-    ...mapState(['selected', 'editing']),
+    ...mapState(['selected', 'editing', 'editorType']),
     ...mapGetters(['currentSlider']),
     gradientColor () {
       const colorLeft = `color-stop(30%, ${this.currentSlider.colors[0]})`

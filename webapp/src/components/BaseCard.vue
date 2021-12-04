@@ -67,7 +67,7 @@ export default {
 .base-card-horizon img {
   width: 80%;
   position: absolute;
-  left: 20%;
+  left: 1%;
   transform: translateY(-60%)
 }
 </style>

@@ -9,7 +9,7 @@
           v-show="task.done"
           @click="deleteTask({ task })"
         >
-          <i class="fa fa-trash"></i>
+          <i class="fas fa-trash"></i>
         </span>
       </transition>
     </div>

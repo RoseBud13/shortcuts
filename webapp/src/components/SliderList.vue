@@ -55,7 +55,7 @@ export default {
 
 <style lang="scss">
 .slider-list {
-  padding: 0 32px;
+  padding: 0 23px;
   height: 200px;
   transition: all 0.5s ease;
   margin-top: 55%;

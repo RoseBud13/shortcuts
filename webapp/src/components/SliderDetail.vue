@@ -1,7 +1,7 @@
 <template>
   <transition name="show" @enter="handleEnter" @leave="handleLeave">
     <div class="slider-detail" v-if="selected">
-      <app-bar @left="unselectSlider" />
+      <app-bar :title="selected.slider.name" @left="unselectSlider" />
       <slider :slider="selected.slider" :active="true" @close="unselectSlider" />
     </div>
   </transition>
@@ -70,7 +70,7 @@ export default {
 
   .slider {
     margin: 0;
-    margin-top: -44px;
+    margin-top: -80px;
     padding: 0 20px;
     box-shadow: none;
   }
@@ -81,10 +81,10 @@ export default {
   .slider_menu {
     opacity: 0;
   }
-  .slider_tasks {
-    opacity: 1;
-    transform: scaleY(1);
-  }
+  // .slider_tasks {
+  //   opacity: 1;
+  //   transform: scaleY(1);
+  // }
   .app-bar {
     opacity: 1;
     transform: translate3d(0, 0, 0);
@@ -104,10 +104,10 @@ export default {
   .slider_menu {
     opacity: 0;
   }
-  .slider_tasks {
-    opacity: 1;
-    transform: scale3d(1, 1, 1);
-  }
+  // .slider_tasks {
+  //   opacity: 1;
+  //   transform: scale3d(1, 1, 1);
+  // }
   .app-bar {
     opacity: 1;
     transform: translate3d(0, 0, 0);
@@ -129,10 +129,10 @@ export default {
   .slider_menu {
     opacity: 1;
   }
-  .slider_tasks {
-    opacity: 0;
-    transform: scale3d(1, 0, 1);
-  }
+  // .slider_tasks {
+  //   opacity: 0;
+  //   transform: scale3d(1, 0, 1);
+  // }
   .app-bar {
     opacity: 0;
     transform: translate3d(0, -100%, 0);
@@ -146,7 +146,7 @@ export default {
   .slider_head,
   .slider_body,
   .slider_menu,
-  .slider_tasks,
+  // .slider_tasks,
   .app-bar {
     transition: all 0.5s ease;
   }
