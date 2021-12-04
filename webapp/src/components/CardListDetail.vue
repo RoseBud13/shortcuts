@@ -1,8 +1,8 @@
 <template>
   <transition name="show" @enter="handleEnter" @leave="handleLeave">
-    <div class="continent-detail" v-if="landed">
+    <div class="card-list-detail" v-if="landed">
       <app-bar @left="departuredCon" />
-      <card-list :cards="landed.continent" />
+      <card-list :cards="landed.cardlist" />
     </div>
   </transition>
 </template>
@@ -59,25 +59,25 @@ export default {
 </script>
 
 <style lang="scss">
-.continent-detail {
+.card-list-detail {
   position: fixed;
   display: flex;
   flex-direction: column;
   border-radius: 0;
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.1);
   color: #666;
   will-change: top, left, width, height;
 
-  .continent {
+  .cardlist {
     margin: 0;
-    margin-top: -44px;
+    margin-top: -35px;
     padding: 0 20px;
     box-shadow: none;
   }
-  .continent_head,
-  .continent_body {
-    transform: translate3d(0, 88px, 0);
-  }
+  // .continent_head,
+  // .continent_body {
+  //   transform: translate3d(0, 88px, 0);
+  // }
   .app-bar {
     opacity: 1;
     transform: translate3d(0, 0, 0);
@@ -87,13 +87,13 @@ export default {
 .show-leave {
   border-radius: 0;
 
-  .continent {
+  .cardlist {
     padding: 0 20px;
   }
-  .continent_head,
-  .continent_body {
-    transform: translate3d(0, 88px, 0);
-  }
+  // .continent_head,
+  // .continent_body {
+  //   transform: translate3d(0, 88px, 0);
+  // }
   .app-bar {
     opacity: 1;
     transform: translate3d(0, 0, 0);
@@ -103,15 +103,15 @@ export default {
 .show-enter {
   border-radius: 8px;
 
-  .continent {
+  .cardlist {
     padding: 0;
   }
-  .continent_head {
-    transform: translate3d(0, 0, 0);
-  }
-  .continent_body {
-    transform: translate3d(0, 189px, 0);
-  }
+  // .continent_head {
+  //   transform: translate3d(0, 0, 0);
+  // }
+  // .continent_body {
+  //   transform: translate3d(0, 189px, 0);
+  // }
   .app-bar {
     opacity: 0;
     transform: translate3d(0, -100%, 0);
@@ -121,9 +121,9 @@ export default {
 .show-leave-active {
   transition: all 0.5s ease;
 
-  .continent,
-  .continent_head,
-  .continent_body,
+  .cardlist,
+  // .continent_head,
+  // .continent_body,
   .app-bar {
     transition: all 0.5s ease;
   }

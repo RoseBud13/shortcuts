@@ -1,26 +1,22 @@
 <template>
     <div class="home">
         <welcome-page></welcome-page>
-        <planet></planet>
-        <continent-detail></continent-detail>
+        <base-card></base-card>
+        <card-list-detail></card-list-detail>
         <!-- <card-list v-if="showCards" :cards="cardsData"></card-list> -->
     </div>
 </template>
 
 <script>
 import WelcomePage from '../components/WelcomePage.vue'
-import CardList from "../components/CardList.vue"
-import Planet from '../components/Planet.vue'
-import ContinentDetail from '../components/ContinentDetail.vue'
-import { mapMutations } from "vuex";
-import { fetchCardStyle, fetchCar } from "../api"
+import BaseCard from '../components/BaseCard.vue'
+import CardListDetail from '../components/CardListDetail.vue'
 
 export default {
     components: {
         WelcomePage,
-        Planet,
-        ContinentDetail
-        //CardList
+        BaseCard,
+        CardListDetail
     },
     data() {
         return {

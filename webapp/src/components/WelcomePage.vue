@@ -1,8 +1,8 @@
 <template>
     <div class="welcome-page">
-        <div class="page-wrapper">
-            <!-- <p>{{ this.$store.state.vehicleModel }}</p> -->
-        </div>
+        <!-- <div class="page-wrapper">
+            <p>{{ this.$store.state.vehicleModel }}</p>
+        </div> -->
         <weather-widget></weather-widget>
     </div>
 </template>
@@ -35,13 +35,13 @@ export default {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
+    background-color: rgb(240, 221, 215);
 }
 .page-wrapper {
     width: 100%;
     height: 100%;
-    background-image: url('../assets/img/XC60.jpg');
+    /* background-image: url('../assets/img/XC60.jpg'); */
     background-size: 100% auto;
-    background-color: white;
     background-repeat: no-repeat;
     background-position: left top;
 }
