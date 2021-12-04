@@ -4,15 +4,30 @@
             <p>{{ this.$store.state.vehicleModel }}</p>
         </div> -->
         <weather-widget></weather-widget>
+        <gradient></gradient>
+        <slider-list></slider-list>
+        <slider-detail></slider-detail>
+        <slider-editing></slider-editing>
+        <floating-button></floating-button>
     </div>
 </template>
 
 <script>
 import WeatherWidget from "./WeatherWidget.vue"
+import Gradient from "./Gradient.vue"
+import SliderList from './SliderList.vue'
+import SliderDetail from './SliderDetail.vue'
+import SliderEditing from './SliderEditing.vue'
+import FloatingButton from './FloatingButton.vue'
 
 export default {
     components: {
-        WeatherWidget
+        WeatherWidget,
+        Gradient,
+        SliderList,
+        SliderDetail,
+        SliderEditing,
+        FloatingButton
     },
     data() {
         return {
@@ -35,7 +50,7 @@ export default {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-    background-color: rgb(240, 221, 215);
+    /* background-color: rgb(240, 221, 215); */
 }
 .page-wrapper {
     width: 100%;

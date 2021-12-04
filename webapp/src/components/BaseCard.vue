@@ -48,6 +48,7 @@ export default {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
+    z-index: 1;
 }
 .base-card-container {
     position: absolute;

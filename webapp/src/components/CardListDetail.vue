@@ -64,9 +64,10 @@ export default {
   display: flex;
   flex-direction: column;
   border-radius: 0;
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #666;
+  background-color: rgba(255, 255, 255, 0.8);
+  // color: #666;
   will-change: top, left, width, height;
+  z-index: 1;
 
   .cardlist {
     margin: 0;

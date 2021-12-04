@@ -84,11 +84,12 @@ export default {
     z-index: 0;
     width: 280px;
     height: 70px;
-    background-color: rgba(221, 166, 157, 0.7);
+    background-color: rgba(200, 201, 199, 0.7);
     border-radius: 10px;
     position: fixed;
     top: 50px;
     right: 30px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
 }
 .status-item {
     width: 100%;
