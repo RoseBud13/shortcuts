@@ -93,3 +93,43 @@ class ExtendedApi():
 
         return e_data
 
+    def get_trip_meter1():
+        tripmeter_url = ""
+        res = requests.get(tripmeter_url, headers=headersInfo)
+
+        t_data = res.json()
+
+        return t_data
+
+    def get_trip_meter2():
+        tripmeter_url = ""
+        res = requests.get(tripmeter_url, headers=headersInfo)
+
+        t_data = res.json()
+
+        return t_data
+
+    def get_odometer():
+        odometer_url = ""
+        res = requests.get(odometer_url, headers=headersInfo)
+
+        o_data = res.json()
+
+        return o_data
+
+    def get_frontleft_door():
+        frontleftdoor_url = ""
+        res = requests.get(frontleftdoor_url, headers=headersInfo)
+
+        f_data = res.json()
+
+        return f_data
+
+    def get_frontleft_tyre():
+        frontleft_tyre_url = ""
+        res = requests.get(frontleft_tyre_url, headers=headersInfo)
+
+        f_data = res.json()
+
+        return f_data
+
