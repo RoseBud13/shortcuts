@@ -9,6 +9,7 @@
         <slider-detail></slider-detail>
         <slider-editing></slider-editing>
         <floating-button></floating-button>
+        <shortcuts-list></shortcuts-list>
     </div>
 </template>
 
@@ -19,6 +20,7 @@ import SliderList from './SliderList.vue'
 import SliderDetail from './SliderDetail.vue'
 import SliderEditing from './SliderEditing.vue'
 import FloatingButton from './FloatingButton.vue'
+import ShortcutsList from './ShortcutsList.vue'
 
 export default {
     components: {
@@ -27,7 +29,8 @@ export default {
         SliderList,
         SliderDetail,
         SliderEditing,
-        FloatingButton
+        FloatingButton,
+        ShortcutsList
     },
     data() {
         return {
@@ -46,7 +49,7 @@ export default {
 
 <style>
 .welcome-page {
-    z-index: -1;
+    /* z-index: -1; */
     width: 100vw;
     height: 100vh;
     overflow: hidden;

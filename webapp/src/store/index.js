@@ -29,32 +29,7 @@ export default createStore({
                 name: 'Shortcuts',
                 content: {
                     tasks: [],
-                    shortcutsInfo: [
-                        // {
-                        //     id: 1,
-                        //     cardStyle: {
-                        //         cardBgColor: '#E2ECE9',
-                        //         cardBgOpacity: 0.5,
-                        //         cardHeight: '130px'
-                        //     }
-                        // },
-                        // {
-                        //     id: 2,
-                        //     cardStyle: {
-                        //         cardBgColor: '#E2ECE9',
-                        //         cardBgOpacity: 0.5,
-                        //         cardHeight: '130px'
-                        //     }
-                        // },
-                        // {
-                        //     id: 3,
-                        //     cardStyle: {
-                        //         cardBgColor: '#E2ECE9',
-                        //         cardBgOpacity: 0.5,
-                        //         cardHeight: '130px'
-                        //     }
-                        // },
-                    ],
+                    shortcutsInfo: [],
                     colors: ['#BEE1E6', '#E2ECE9']
                 },
                 colors: ['#BEE1E6', '#E2ECE9']
@@ -136,7 +111,8 @@ export default createStore({
         selected: null,
         unselect: null,
         editing: null,
-        editorType: null
+        editorType: null,
+        showScList: false
     },
     mutations: {
         setVehicleModel(state, model) {
@@ -185,12 +161,17 @@ export default createStore({
                     })
                 }
                 state.editing = state.editing ? null : { text: '' }
+                state.showScList = false
             } else if (state.editorType === 'shortcuts') {
                 state.editing = state.editing ? null : { text: '' }
+                state.showScList = false
             }
         },
         setShortcutsData(state, data) {
             state.sliders[1].content.shortcutsInfo = data
+        },
+        toggleScList(state) {
+            state.showScList = !state.showScList
         }
     },
     getters: {
