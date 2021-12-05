@@ -30,30 +30,30 @@ export default createStore({
                 content: {
                     tasks: [],
                     shortcutsInfo: [
-                        {
-                            id: 1,
-                            cardStyle: {
-                                cardBgColor: '#E2ECE9',
-                                cardBgOpacity: 0.5,
-                                cardHeight: '130px'
-                            }
-                        },
-                        {
-                            id: 2,
-                            cardStyle: {
-                                cardBgColor: '#E2ECE9',
-                                cardBgOpacity: 0.5,
-                                cardHeight: '130px'
-                            }
-                        },
-                        {
-                            id: 3,
-                            cardStyle: {
-                                cardBgColor: '#E2ECE9',
-                                cardBgOpacity: 0.5,
-                                cardHeight: '130px'
-                            }
-                        },
+                        // {
+                        //     id: 1,
+                        //     cardStyle: {
+                        //         cardBgColor: '#E2ECE9',
+                        //         cardBgOpacity: 0.5,
+                        //         cardHeight: '130px'
+                        //     }
+                        // },
+                        // {
+                        //     id: 2,
+                        //     cardStyle: {
+                        //         cardBgColor: '#E2ECE9',
+                        //         cardBgOpacity: 0.5,
+                        //         cardHeight: '130px'
+                        //     }
+                        // },
+                        // {
+                        //     id: 3,
+                        //     cardStyle: {
+                        //         cardBgColor: '#E2ECE9',
+                        //         cardBgOpacity: 0.5,
+                        //         cardHeight: '130px'
+                        //     }
+                        // },
                     ],
                     colors: ['#BEE1E6', '#E2ECE9']
                 },
@@ -188,6 +188,9 @@ export default createStore({
             } else if (state.editorType === 'shortcuts') {
                 state.editing = state.editing ? null : { text: '' }
             }
+        },
+        setShortcutsData(state, data) {
+            state.sliders[1].content.shortcutsInfo = data
         }
     },
     getters: {

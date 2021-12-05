@@ -11,7 +11,7 @@
             :key="card.id"
         >
             <main-card v-show="card.cardType === 'main'" :cardStyle="card.cardStyle"></main-card>
-            <cluster-card v-show="card.cardType === 'cluster'" :cardStyle="card.cardStyle"></cluster-card>
+            <!-- <cluster-card v-show="card.cardType === 'cluster'" :cardStyle="card.cardStyle"></cluster-card> -->
         </li>
     </div>
 </template>

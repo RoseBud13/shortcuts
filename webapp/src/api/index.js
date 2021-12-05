@@ -31,3 +31,18 @@ export function getWeatherInfo(query) {
         params: query
     })
 }
+
+export function fetchTemplates(query) {
+    return request({
+        url: '/get-templates/',
+        method: 'get',
+        params: query
+    })
+}
+
+export function executeTemplate(template) {
+    return request({
+      url: `/excecute-template/?template=${template}`,
+      method: 'get'
+    })
+  }
