@@ -66,7 +66,7 @@ export default {
   background-color: white;
   color: #666;
   will-change: top, left, width, height;
-  z-index: 2;
+  z-index: 1;
 
   .slider {
     margin: 0;
