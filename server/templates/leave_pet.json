@@ -5,11 +5,15 @@
       "step1" :
         {
           "function" : "postClimatizationStart"
-        },
+        }
+    },
+    {
       "step2" :
         {
           "function" : "postLock"
-        },
+        }
+    },
+    {
       "step3" :
         {
           "function" : "sendReminder"

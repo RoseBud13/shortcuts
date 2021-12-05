@@ -34,5 +34,8 @@ def create_app(app_name='SHORTCUTXXX'):
     from appapi.volvo_extended_api import extended_apibox
     app.register_blueprint(extended_apibox)
 
+    from appapi.template_parser import template_parser
+    app.register_blueprint(template_parser)
+
     return app
    

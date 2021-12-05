@@ -1,0 +1,23 @@
+{
+    "template_name" : "test",
+    "step" : [
+      {
+        "step1" :
+          {
+            "function" : "getCardsInfo"
+          }
+      },
+      {
+        "step2" :
+          {
+            "function" : "getDateTime"
+          }
+      },
+      {
+        "step3" :
+          {
+            "function" : "getWeatherData"
+          }
+      }
+    ]
+  }

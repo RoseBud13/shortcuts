@@ -1,8 +1,8 @@
 <template>
   <transition name="show" @enter="handleEnter" @leave="handleLeave">
-    <div class="continent-detail" v-if="landed">
-      <app-bar @left="departuredCon" />
-      <card-list :cards="landed.continent" />
+    <div class="slider-detail" v-if="selected">
+      <app-bar :title="selected.slider.name" @left="unselectSlider" />
+      <slider :slider="selected.slider" :active="true" @close="unselectSlider" />
     </div>
   </transition>
 </template>
@@ -10,31 +10,30 @@
 <script>
 import { mapState, mapMutations } from 'vuex'
 import AppBar from './AppBar.vue'
-import CardList from './CardList.vue'
-
+import Slider from './Slider.vue'
 export default {
   components: {
     AppBar,
-    CardList
+    Slider
   },
   computed: {
-    ...mapState(['landed', 'departured'])
+    ...mapState(['selected', 'unselect'])
   },
   methods: {
-    ...mapMutations(['departuredCon']),
+    ...mapMutations(['unselectSlider']),
     handleEnter (el) {
       Object.assign(el.style, {
-        top: `${this.landed.rect.top}px`,
-        left: `${this.landed.rect.left}px`,
-        width: `${this.landed.rect.width}px`,
-        height: `${this.landed.rect.height}px`
+        top: `${this.selected.rect.top}px`,
+        left: `${this.selected.rect.left}px`,
+        width: `${this.selected.rect.width}px`,
+        height: `${this.selected.rect.height}px`
       })
       setTimeout(() => {
         Object.assign(el.style, {
           top: 0,
           left: 0,
-          width: `${this.landed.rect.appWidth}px`,
-          height: `${this.landed.rect.appHeight}px`
+          width: `${this.selected.rect.appWidth}px`,
+          height: `${this.selected.rect.appHeight}px`
         })
       }, 0)
     },
@@ -42,15 +41,15 @@ export default {
       Object.assign(el.style, {
         top: 0,
         left: 0,
-        width: `${this.departured.rect.appWidth}px`,
-        height: `${this.departured.rect.appHeight}px`
+        width: `${this.unselect.rect.appWidth}px`,
+        height: `${this.unselect.rect.appHeight}px`
       })
       setTimeout(() => {
         Object.assign(el.style, {
-          top: `${this.departured.rect.top}px`,
-          left: `${this.departured.rect.left}px`,
-          width: `${this.departured.rect.width}px`,
-          height: `${this.departured.rect.height}px`
+          top: `${this.unselect.rect.top}px`,
+          left: `${this.unselect.rect.left}px`,
+          width: `${this.unselect.rect.width}px`,
+          height: `${this.unselect.rect.height}px`
         })
       }, 0)
     }
@@ -59,25 +58,33 @@ export default {
 </script>
 
 <style lang="scss">
-.continent-detail {
+.slider-detail {
   position: fixed;
   display: flex;
   flex-direction: column;
   border-radius: 0;
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: white;
   color: #666;
   will-change: top, left, width, height;
+  z-index: 2;
 
-  .continent {
+  .slider {
     margin: 0;
-    margin-top: -44px;
+    margin-top: -80px;
     padding: 0 20px;
     box-shadow: none;
   }
-  .continent_head,
-  .continent_body {
+  .slider_head,
+  .slider_body {
     transform: translate3d(0, 88px, 0);
   }
+  .slider_menu {
+    opacity: 0;
+  }
+  // .slider_tasks {
+  //   opacity: 1;
+  //   transform: scaleY(1);
+  // }
   .app-bar {
     opacity: 1;
     transform: translate3d(0, 0, 0);
@@ -87,13 +94,20 @@ export default {
 .show-leave {
   border-radius: 0;
 
-  .continent {
+  .slider {
     padding: 0 20px;
   }
-  .continent_head,
-  .continent_body {
+  .slider_head,
+  .slider_body {
     transform: translate3d(0, 88px, 0);
   }
+  .slider_menu {
+    opacity: 0;
+  }
+  // .slider_tasks {
+  //   opacity: 1;
+  //   transform: scale3d(1, 1, 1);
+  // }
   .app-bar {
     opacity: 1;
     transform: translate3d(0, 0, 0);
@@ -103,15 +117,22 @@ export default {
 .show-enter {
   border-radius: 8px;
 
-  .continent {
+  .slider {
     padding: 0;
   }
-  .continent_head {
+  .slider_head {
     transform: translate3d(0, 0, 0);
   }
-  .continent_body {
+  .slider_body {
     transform: translate3d(0, 189px, 0);
   }
+  .slider_menu {
+    opacity: 1;
+  }
+  // .slider_tasks {
+  //   opacity: 0;
+  //   transform: scale3d(1, 0, 1);
+  // }
   .app-bar {
     opacity: 0;
     transform: translate3d(0, -100%, 0);
@@ -121,9 +142,11 @@ export default {
 .show-leave-active {
   transition: all 0.5s ease;
 
-  .continent,
-  .continent_head,
-  .continent_body,
+  .slider,
+  .slider_head,
+  .slider_body,
+  .slider_menu,
+  // .slider_tasks,
   .app-bar {
     transition: all 0.5s ease;
   }

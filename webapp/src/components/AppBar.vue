@@ -1,11 +1,11 @@
 <template>
   <div class="app-bar">
     <span class="app-bar_l" @click="$emit('left')">
-      <i :class="['fa', `fa-${left}`]"></i>
+      <i :class="['fas', `fa-${left}`]"></i>
     </span>
     <h1>{{ title }}</h1>
     <span class="app-bar_r" @click="$emit('right')">
-      <i :class="['fa', `fa-${right}`]"></i>
+      <i :class="['fas', `fa-${right}`]"></i>
     </span>
   </div>
 </template>
@@ -33,8 +33,8 @@ export default {
 .app-bar {
   display: flex;
   align-items: center;
-  height: 44px;
-  font-size: 15px;
+  height: 50px;
+  font-size: 20px;
   z-index: 1;
 
   h1 {

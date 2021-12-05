@@ -1,8 +1,8 @@
 <template>
-  <div class="planet" v-show="$store.state.show">
-    <div class="planet-container">
-      <div class="planet-horizon">
-        <!-- <img src="../assets/prince.png" alt=""> -->
+  <div class="base-card" v-show="$store.state.show">
+    <div class="base-card-container">
+      <div class="base-card-horizon">
+        <img src="../assets/img/v90.png" alt="">
       </div>
       <card-list
           :cards="cardsData"
@@ -44,18 +44,19 @@ export default {
 </script>
 
 <style lang="scss">
-.planet {
+.base-card {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
+    z-index: 1;
 }
-.planet-container {
+.base-card-container {
     position: absolute;
-    top: 80%;
+    top: 70%;
     height: 100vh;
     width: 100vw;
 }
-.planet-horizon {
+.base-card-horizon {
     height: 35px;
     width: 100%;
     background-color: rgb(255, 255, 255);
@@ -63,10 +64,10 @@ export default {
     border: 0;
     margin-bottom: -6px;
 }
-.planet-horizon img {
-  width: 35%;
+.base-card-horizon img {
+  width: 80%;
   position: absolute;
-  left: 60%;
-  transform: translateY(-65%)
+  left: 1%;
+  transform: translateY(-60%)
 }
 </style>
