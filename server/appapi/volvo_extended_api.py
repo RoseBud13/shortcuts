@@ -65,8 +65,6 @@ class ExtendedApi():
         return b_data
 
 
-    # def distance_to_empty():
-
     def get_enginecoollevel():
         enginecoollevel_url = ""
         res = requests.get(enginecoollevel_url, headers = headersInfo)
@@ -116,14 +114,6 @@ class ExtendedApi():
         o_data = res.json()
 
         return o_data
-
-    def get_frontleft_door():
-        frontleftdoor_url = ""
-        res = requests.get(frontleftdoor_url, headers=headersInfo)
-
-        f_data = res.json()
-
-        return f_data
 
     def get_frontleft_tyre():
         frontleft_tyre_url = ""

@@ -104,7 +104,7 @@ class ConnectedApi():
         # tyre_timestamp = datetime.fromtimestamp(t_data['data']['frontLeft']['timestamp'])
         # date = tyre_timestamp.strftime("%m/%d/%Y, %H:%M:%S")
 
-        Tyre_info['date'] = parser.parse(t_data['data']['frontLeft']['timestamp'])
+        # Tyre_info['date'] = parser.parse(t_data['data']['frontLeft']['timestamp'])
         Tyre_info['frontLeft'] = t_data['data']['frontLeft']['value']
         Tyre_info['frontRight'] = t_data['data']['frontRight']['value']
         Tyre_info['rearLeft'] = t_data['data']['rearLeft']['value']
@@ -178,7 +178,7 @@ class ConnectedApi():
         # date = date_timestamp.strftime("%m/%d/%Y, %H:%M:%S")
 
         Fuel_info['value'] = f_data['data']['fuelAmount']['value']
-        Fuel_info['date'] = parser.parse(f_data['data']['fuelAmount']['timestamp'])
+        # Fuel_info['date'] = parser.parse(f_data['data']['fuelAmount']['timestamp'])
 
         return Fuel_info
 
@@ -231,7 +231,7 @@ class ConnectedApi():
         # date_timestamp = datetime.fromtimestamp(s_data['data']['carLocked']['timestamp'])
         # date = date_timestamp.strftime("%m/%d/%Y, %H:%M:%S")
 
-        DoorLock_info['date'] = parser.parse(s_data['data']['carLocked']['timestamp'])
+        # DoorLock_info['date'] = parser.parse(s_data['data']['carLocked']['timestamp'])
         DoorLock_info['lock'] = s_data['data']['carLocked']['value']
         DoorLock_info['frontLeft'] = s_data['data']['frontLeft']['value']
         DoorLock_info['frontRight'] = s_data['data']['frontRight']['value']
@@ -253,7 +253,7 @@ class ConnectedApi():
         # date_timestamp = datetime.fromtimestamp(d_data['data']['serviceStatus']['timestamp'])
         # date = date_timestamp.strftime("%m/%d/%Y, %H:%M:%S")
 
-        Diagnostic_info['date'] = parser.parse(d_data['data']['serviceStatus']['timestamp'])
+        # Diagnostic_info['date'] = parser.parse(d_data['data']['serviceStatus']['timestamp'])
         Diagnostic_info['serviceStatus'] = d_data['data']['serviceStatus']['value']
         Diagnostic_info['serviceTrigger'] = d_data['data']['serviceTrigger']['value']
         Diagnostic_info['engineHoursToService'] = d_data['data']['engineHoursToService']['value']

@@ -1,0 +1,17 @@
+{
+  "homeinformation" : {
+      "General information":
+      {
+        "name" : "V60",
+        "Odometer" : "100000",
+        "AverageFuelConsumption" : "7"
+      },
+      "Current status":
+      {
+        "remaining battery" : "90%",
+        "tyre" : "Normal",
+        "lock" : "CLOSED",
+        "fuel" : "70%"
+      }
+  }
+}

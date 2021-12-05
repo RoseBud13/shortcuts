@@ -15,6 +15,7 @@ from .template_parser import run, getAllFileNames
 
 from .apibox import Apibox
 from .volvo_connected_api import ConnectedApi
+from .volvo_extended_api import ExtendedApi
 
 
 api = Blueprint('api', __name__)
@@ -195,4 +196,3 @@ def postLo():
 def postNavi():
     status = ConnectedApi.postNavigation()
     return status
-
