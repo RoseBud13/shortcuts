@@ -18,14 +18,14 @@ apibox = Blueprint('apibox', __name__)
 class Apibox():
     def getCardsInfo():
         cards = Card.query.all()
-        print([card.to_dict() for card in cards])
+        # print([card.to_dict() for card in cards])
         return {'cardsInfo': [card.to_dict() for card in cards]}
 
 
     def getDateTime():
         time = datetime.now()
         result = time.strftime("%c")
-        print(result[:10])
+        # print(result[:10])
         return result[:10]
 
 
@@ -55,5 +55,5 @@ class Apibox():
         data['weather_status'] = raw_data['weather'][0]['main']
         data['weather_info'] = weather_info
         
-        print(data)
+        # print(data)
         return data

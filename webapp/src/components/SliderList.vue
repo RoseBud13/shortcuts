@@ -18,6 +18,7 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
+import { fetchTemplates } from "../api";
 import Slider from './Slider.vue'
 
 export default {
@@ -48,7 +49,32 @@ export default {
     ...mapState(['sliders', 'currentIndex', 'selected'])
   },
   methods: {
-    ...mapMutations(['selectSlider', 'nextSlider', 'prevSlider'])
+    ...mapMutations(['selectSlider', 'nextSlider', 'prevSlider', 'setShortcutsData']),
+
+    getTemplatesData() {
+      fetchTemplates().then(response => {
+        let temp_list = []
+        let temp_style = {
+          cardBgColor: '#E2ECE9',
+          cardBgOpacity: 0.5,
+          cardHeight: '130px'
+        }
+        let names = response.templates;
+        for (let i = 0; i < names.length; i++) {
+          let temp_data = {};
+          temp_data.name = names[i];
+          temp_data.id = i + 1;
+          temp_data.cardStyle = temp_style;
+          temp_list.push(temp_data);
+        }
+        this.setShortcutsData(temp_list);
+      }).catch(error => {
+        console.log(error);
+      });
+    }
+  },
+  created() {
+    this.getTemplatesData()
   }
 }
 </script>

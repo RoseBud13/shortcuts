@@ -1,7 +1,7 @@
 <template>
     <div class="shortcuts">
         <li v-for="shortcut in content.shortcutsInfo" :key="shortcut.id">
-            <cluster-card :cardStyle="shortcut.cardStyle"></cluster-card>
+            <cluster-card :cardStyle="shortcut.cardStyle" :temp_name="shortcut.name"></cluster-card>
         </li>
     </div>
 </template>
@@ -24,5 +24,13 @@ export default {
 </script>
 
 <style>
+.shortcuts {
+    width: 100%;
+    border: none;
+    margin: 30px auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
 
 </style>

@@ -7,7 +7,7 @@ Created by Xiong, Kaijie on 2021-11-24.
 Copyright © 2021 Xiong, Kaijie & Xu, Shuoni. All rights reserved.
 """
 
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 import random
 import requests
 
@@ -22,14 +22,25 @@ api = Blueprint('api', __name__)
 
 @api.route('/test/', methods=['GET'])
 def testImport():
-    r = run()
-    return 'test'
+    r = run('test')
+    return r
 
 
 @api.route('/get-templates/', methods=['GET'])
 def getTemplates():
     data = getAllFileNames()
     return jsonify({'templates': data})
+
+
+@api.route('/excecute-template/', methods=['GET'])
+def excecuteTemplate():
+    template_name = request.args.get('template', None)
+    if template_name is None:
+        return 'template name needed'
+    else:
+        name = template_name
+    r = run(name)
+    return jsonify(r)
 
 
 @api.route('/cards-info/', methods=['GET'])

@@ -25,11 +25,13 @@ template_parser = Blueprint('template_parser', __name__)
 
 file_list = []
 
-def run():
-    data_dict = readStoredData('test.json')
+def run(template_name):
+    name = template_name + '.json'
+    data_dict = readStoredData(name)
     print(data_dict)
     function_list = get_template_function(data_dict)
     exec_function(function_list)
+    return 'executed'
 
 
 def getAllFileNames():
@@ -40,7 +42,7 @@ def getAllFileNames():
 
     for f in os.listdir(file_path):
         if not f.startswith('.'):
-            temp_file_list.append(f)
+            temp_file_list.append(f.replace('.json', ''))
     
     file_list = sorted(temp_file_list)
     print(file_list)
