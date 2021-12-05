@@ -42,7 +42,23 @@ export function fetchTemplates(query) {
 
 export function executeTemplate(template) {
     return request({
-      url: `/excecute-template/?template=${template}`,
-      method: 'get'
+        url: `/excecute-template/?template=${template}`,
+        method: 'get'
+    })
+}
+
+export function fetchAllMethods(query) {
+    return request({
+        url: '/get-all-methods/',
+        method: 'get',
+        params: query
+    })
+}
+
+export function sendTemplate(data) {
+    return request({
+      url: '/create-template/',
+      method: 'post',
+      data
     })
   }

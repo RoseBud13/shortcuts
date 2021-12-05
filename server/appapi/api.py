@@ -16,6 +16,7 @@ from .template_parser import run, getAllFileNames
 from .apibox import Apibox
 from .volvo_connected_api import ConnectedApi
 from .volvo_extended_api import ExtendedApi
+from .gen_json import gen_json
 
 
 api = Blueprint('api', __name__)
@@ -25,6 +26,15 @@ api = Blueprint('api', __name__)
 def testImport():
     r = run('test')
     return r
+
+
+@api.route('/get-all-methods/', methods=['GET'])
+def getMethods():
+    method_list_apibox = [func for func in dir(Apibox) if callable(getattr(Apibox, func)) and not func.startswith("__")]
+    method_list_connected = [func for func in dir(ConnectedApi) if callable(getattr(ConnectedApi, func)) and not func.startswith("__")]
+    method_list_extended = [func for func in dir(ExtendedApi) if callable(getattr(ExtendedApi, func)) and not func.startswith("__")]
+    method_list = method_list_apibox + method_list_connected + method_list_extended
+    return jsonify({'methods': method_list})
 
 
 @api.route('/get-templates/', methods=['GET'])
@@ -41,6 +51,13 @@ def excecuteTemplate():
     else:
         name = template_name
     r = run(name)
+    return jsonify(r)
+
+
+@api.route('/create-template/', methods=['POST'])
+def createTemplate():
+    data = request.get_json(force=True)
+    r = gen_json(data)
     return jsonify(r)
 
 

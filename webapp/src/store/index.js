@@ -112,7 +112,11 @@ export default createStore({
         unselect: null,
         editing: null,
         editorType: null,
-        showScList: false
+        showScList: false,
+        showScBuilder: false,
+
+        selectedMethods: [],
+        methodsBuilderName: ''
     },
     mutations: {
         setVehicleModel(state, model) {
@@ -153,11 +157,11 @@ export default createStore({
         toggleEditing (state) {
             if (state.editorType === 'todo') {
                 if (state.editing && state.editing.text) {
-                    state.selected.slider.content.tasks.unshift({
-                    title: state.editing.text,
-                    date: new Date(),
-                    done: false,
-                    deleted: false
+                        state.selected.slider.content.tasks.unshift({
+                        title: state.editing.text,
+                        date: new Date(),
+                        done: false,
+                        deleted: false
                     })
                 }
                 state.editing = state.editing ? null : { text: '' }
@@ -165,14 +169,32 @@ export default createStore({
             } else if (state.editorType === 'shortcuts') {
                 state.editing = state.editing ? null : { text: '' }
                 state.showScList = false
+                state.showScBuilder = false
+                state.selectedMethods = []
             }
         },
         setShortcutsData(state, data) {
             state.sliders[1].content.shortcutsInfo = data
         },
+        updateShortcutsData(state, data) {
+            state.sliders[1].content.shortcutsInfo.push(data)
+        },
         toggleScList(state) {
             state.showScList = !state.showScList
-        }
+        },
+        openScBuilder(state) {
+            state.showScBuilder = true
+        },
+        closeScBuilder(state) {
+            state.showScBuilder = false
+            state.selectedMethods = []
+        },
+        buildShortcuts(state, data) {
+            state.selectedMethods.push(data)
+        },
+        setBuilderName(state, data) {
+            state.methodsBuilderName = data
+        },
     },
     getters: {
         currentSlider (state) {

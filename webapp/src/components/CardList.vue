@@ -13,30 +13,44 @@
             <main-card v-show="card.cardType === 'main'" :cardStyle="card.cardStyle"></main-card>
             <!-- <cluster-card v-show="card.cardType === 'cluster'" :cardStyle="card.cardStyle"></cluster-card> -->
         </li>
+        <div class="sh-con">
+          <li
+            v-for="slider in sliders"
+            :key="slider.name"
+          >
+            <shortcuts :content="slider.content"></shortcuts>
+          </li>
+        </div>
     </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import MainCard from "./MainCard.vue";
 import ClusterCard from "./ClusterCard.vue";
+import Shortcuts from './Shortcuts.vue'
 
 export default {
-    components: {
-        MainCard,
-        ClusterCard
-    },
-    props: {
-        cards: {
-            type: Array,
-            required: true
-        }
-    },
-    data() {
+  components: {
+    MainCard,
+    ClusterCard,
+    Shortcuts
+  },
+  props: {
+    cards: {
+      type: Array,
+      required: true
+    }
+  },
+  data() {
     return {
       startY: 0, // 触摸位置
       endY: 0, // 结束位置
       disY: 0, // 移动距离
     }
+  },
+  computed: {
+    ...mapState(['sliders'])
   },
   mounted () {
     this.$el.addEventListener('touchstart', evt => {
@@ -105,5 +119,8 @@ export default {
 }
 .card-list, li, ol {
     list-style: none;
+}
+.sh-con {
+  padding-left: 20px;
 }
 </style>

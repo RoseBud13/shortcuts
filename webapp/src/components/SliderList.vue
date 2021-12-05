@@ -56,7 +56,7 @@ export default {
         let temp_list = []
         let temp_style = {
           cardBgColor: '#E2ECE9',
-          cardBgOpacity: 0.5,
+          cardBgOpacity: 1,
           cardHeight: '130px'
         }
         let names = response.templates;

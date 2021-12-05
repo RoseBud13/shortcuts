@@ -31,10 +31,10 @@ def forgecards():
     cards = [
         {'cardType': 'main', 'cardBgColor': '#7089AC', 'cardBgOpacity': 1, 'cardHeight': '200px'},
         {'cardType': 'main', 'cardBgColor': '#C8C9C7', 'cardBgOpacity': 1, 'cardHeight': '150px'},
-        {'cardType': 'cluster', 'cardBgColor': '#141414', 'cardBgOpacity': 1, 'cardHeight': '160px'},
-        {'cardType': 'main', 'cardBgColor': '#D9B48B', 'cardBgOpacity': 1, 'cardHeight': '170px'},
-        {'cardType': 'main', 'cardBgColor': '#DDA69D', 'cardBgOpacity': 1, 'cardHeight': '300px'},
-        {'cardType': 'cluster', 'cardBgColor': '#A3B2A4', 'cardBgOpacity': 1, 'cardHeight': '160px'},
+        # {'cardType': 'cluster', 'cardBgColor': '#141414', 'cardBgOpacity': 1, 'cardHeight': '160px'},
+        # {'cardType': 'main', 'cardBgColor': '#D9B48B', 'cardBgOpacity': 1, 'cardHeight': '170px'},
+        # {'cardType': 'main', 'cardBgColor': '#DDA69D', 'cardBgOpacity': 1, 'cardHeight': '300px'},
+        # {'cardType': 'cluster', 'cardBgColor': '#A3B2A4', 'cardBgOpacity': 1, 'cardHeight': '160px'},
     ]
 
     for c in cards:

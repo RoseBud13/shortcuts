@@ -5,16 +5,18 @@
       v-if="!!selected && !!editorType"
       :class="{ 'floating-button__editing': !!editing }"
       :style="{ background: gradientColor }"
-      @click="toggleEditing"
+      @click="toggleControl"
     ></button>
   </transition>
 </template>
 
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex'
+import { sendTemplate } from '../api'
+
 export default {
   computed: {
-    ...mapState(['selected', 'editing', 'editorType']),
+    ...mapState(['selected', 'editing', 'editorType', 'selectedMethods', 'methodsBuilderName']),
     ...mapGetters(['currentSlider']),
     gradientColor () {
       const colorLeft = `color-stop(30%, ${this.currentSlider.colors[0]})`
@@ -23,7 +25,51 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['toggleEditing'])
+    ...mapMutations(['toggleEditing', 'setBuilderName', 'updateShortcutsData']),
+
+    toggleControl() {
+      if (this.editorType === 'shortcuts') {
+        // console.log(this.selectedMethods)
+        // console.log(this.methodsBuilderName)
+
+        if (this.selectedMethods.length != 0) {
+          var data = {}
+          for (let i = 0; i < this.selectedMethods.length; i++) {
+            var step = i + 1;
+            data[step] = this.selectedMethods[i];
+          }
+          data['template'] = this.methodsBuilderName
+          console.log(data)
+
+          sendTemplate(data).then(response => {
+            console.log(response);
+            this.updateTemplatesData(data['template']);
+          }).catch(e => {
+            console.log(e);
+          });
+        };
+        this.setBuilderName('');
+        this.toggleEditing();
+
+      } else {
+        this.toggleEditing()
+      }
+    },
+
+    updateTemplatesData(name) {
+      let temp_style = {
+        cardBgColor: '#E2ECE9',
+        cardBgOpacity: 0.5,
+        cardHeight: '130px'
+      }
+      
+      let temp_data = {};
+      temp_data.name = name;
+      temp_data.id = 6;
+      temp_data.cardStyle = temp_style;
+
+      this.updateShortcutsData(temp_data);
+    }
   }
 }
 </script>
