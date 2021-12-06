@@ -6,10 +6,15 @@
       </div>
       <div class="slider_menu"><i class="fa fa-ellipsis-v"></i></div>
     </div>
+    <div class="card-show" v-if="showShow">
+      <h3 class="slider_title">{{ slider.name }}</h3>
+    </div>
     <div class="slider_body">
       <h3 class="slider_title">{{ slider.name }}</h3>
+      <home-comp v-show="slider.type === 'home'"></home-comp>
       <todo v-show="slider.type === 'todo'" :content="slider.content"></todo>
       <shortcuts v-show="slider.type === 'shortcuts'" :content="slider.content"></shortcuts>
+      <map-comp v-show="slider.type === 'map'"></map-comp>
     </div>
   </div>
 </template>
@@ -17,11 +22,16 @@
 <script>
 import Todo from './Todo.vue'
 import Shortcuts from './Shortcuts.vue'
+import HomeComp from './HomeComp.vue'
+import MapComp from './MapComp.vue'
+import { mapState, mapMutations } from 'vuex'
 
 export default {
   components: {
     Todo,
-    Shortcuts
+    Shortcuts,
+    HomeComp,
+    MapComp
   },
   props: {
     slider: {
@@ -32,12 +42,20 @@ export default {
       type: Boolean
     }
   },
+  data() {
+    return {
+      
+    }
+  },
   computed: {
     color () {
       return this.slider.colors[0]
-    }
+    },
+    ...mapState(['showShow'])
   },
   methods: {
+    ...mapMutations(['toggleShowShow']),
+
     handleClick () {
       const appRect = document.querySelector('#app').getBoundingClientRect()
       const elRect = this.$el.getBoundingClientRect()
@@ -51,6 +69,7 @@ export default {
       rect.appHeight = appRect.height
       this.$emit('select', { rect, slider })
       this.$store.state.editorType = this.slider.type
+      this.toggleShowShow()
     }
   }
 }
@@ -76,6 +95,7 @@ export default {
   transform: translate3d(0, 0, 0);
   will-change: transform;
 }
+
 .slider_body {
   transform: translate3d(0, 189px, 0);
   will-change: transform;

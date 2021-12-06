@@ -23,6 +23,7 @@ headersInfo = {}
 credentialInfo = CredentialConfig()
 headersInfo['authorization'] = getattr(credentialInfo, 'token')
 headersInfo['vcc-api-key'] = getattr(credentialInfo, 'vcc_api_key')
+headersInfo['content-type'] = 'application/vnd.volvocars.api.connected-vehicle.flash.v1+json'
 
 
 class VehicleVin():
@@ -30,13 +31,14 @@ class VehicleVin():
     def getVehicleVinUrl():
         url = 'https://api.volvocars.com/connected-vehicle/v1/vehicles'
 
-        print(headersInfo)
+        # print(headersInfo)
 
         r = requests.get(url, headers = headersInfo)
         raw_data = r.json()
         print(json.dumps(raw_data, indent=4, sort_keys=True))
 
-        vehicleVin = raw_data['data'][0]['vin']
+        vehicleVin = raw_data['data'][1]['vin']
+        print(vehicleVin)
         vehicleUrl = 'https://api.volvocars.com/connected-vehicle/v1/vehicles/' + vehicleVin
 
         return vehicleUrl
@@ -287,7 +289,7 @@ class ConnectedApi():
 
         c_data = None
 
-        res = requests.post(url = climatizationUrl, data = c_data)
+        res = requests.post(url = climatizationUrl, data = c_data, headers = headersInfo)
         action_url = res.text
 
         return action_url
@@ -299,7 +301,7 @@ class ConnectedApi():
 
         c_data = None
 
-        res = requests.post(url = climatizationUrl, data = c_data)
+        res = requests.post(url = climatizationUrl, data = c_data, headers = headersInfo)
         action_url = res.text
 
         return action_url
@@ -313,7 +315,7 @@ class ConnectedApi():
             "runtimeMinute" : runtimeMinute
         }
 
-        res = requests.post(url = engineUrl, data = e_data)
+        res = requests.post(url = engineUrl, data = e_data, headers = headersInfo)
         action_url = res.text
 
         return action_url
@@ -324,7 +326,7 @@ class ConnectedApi():
 
         e_data = None
 
-        res = requests.post(url = engineUrl, data = e_data)
+        res = requests.post(url = engineUrl, data = e_data, headers = headersInfo)
         action_url = res.text
 
         return action_url
@@ -336,8 +338,9 @@ class ConnectedApi():
 
         f_data = None
 
-        res = requests.post(url = flashUrl, data = f_data)
+        res = requests.post(url = flashUrl, data = f_data, headers = headersInfo)
         action_url = res.text
+        print(action_url)
 
         return action_url
 
@@ -348,7 +351,7 @@ class ConnectedApi():
 
         h_data = None
 
-        res = requests.post(url = hookflashUrl, data = h_data)
+        res = requests.post(url = hookflashUrl, data = h_data, headers = headersInfo)
         action_url = res.text
 
         return action_url
@@ -360,7 +363,7 @@ class ConnectedApi():
 
         h_data = None
 
-        res = requests.post(honkUrl, data = h_data)
+        res = requests.post(honkUrl, data = h_data, headers = headersInfo)
         action_url = res.text
 
         return action_url
@@ -371,7 +374,7 @@ class ConnectedApi():
 
         l_data = None
 
-        res = requests.post(url = lockUrl, data = l_data)
+        res = requests.post(url = lockUrl, data = l_data, headers = headersInfo)
         action_url = res.text
 
         return action_url
@@ -384,7 +387,7 @@ class ConnectedApi():
             "unlockDuration" : unlockduration
         }
 
-        res = requests.post(url = unlockUrl, data = u_data)
+        res = requests.post(url = unlockUrl, data = u_data, headers = headersInfo)
         action_url = res.text
 
         return action_url
@@ -402,7 +405,7 @@ class ConnectedApi():
             }
         }
 
-        res = requests.post(url = navigationUrl, data = n_data)
+        res = requests.post(url = navigationUrl, data = n_data, headers = headersInfo)
         action_url = res.text
 
         return action_url

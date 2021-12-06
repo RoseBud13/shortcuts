@@ -2,8 +2,8 @@
     <div class="card-list">
         <div class="greetings" v-show="$store.state.show">
           <div class="greetings-content">
-            <h1>Hej Andy</h1>
-            <h1>Your V90 is ready!</h1>
+            <h1>Hey Sharon</h1>
+            <h1>Your V60 is ready!</h1>
           </div>
         </div>
         <li

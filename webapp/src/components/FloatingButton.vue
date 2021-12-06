@@ -2,7 +2,7 @@
   <transition name="grow">
     <button
       class="floating-button"
-      v-if="!!selected && !!editorType"
+      v-if="!!selected && !!(editorType === 'shortcuts' || editorType === 'todo')"
       :class="{ 'floating-button__editing': !!editing }"
       :style="{ background: gradientColor }"
       @click="toggleControl"

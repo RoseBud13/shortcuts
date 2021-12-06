@@ -7,15 +7,15 @@ export default createStore({
         departured: null,
         show: true,
         cardContent: {
-            content: 'data here'
+            content: ''
         },
 
         currentIndex: 0,
         sliders: [
             {
-                type: '',
+                type: 'home',
                 icon: 'tachometer-alt',
-                name: 'Home',
+                name: 'Information',
                 content: {
                     tasks: [],
                     shortcutsInfo: [],
@@ -35,9 +35,9 @@ export default createStore({
                 colors: ['#BEE1E6', '#E2ECE9']
             },
             {
-                type: '',
+                type: 'map',
                 icon: 'map-marked',
-                name: 'Interets',
+                name: 'Interests',
                 content: {
                     tasks: [],
                     shortcutsInfo: [],
@@ -53,21 +53,21 @@ export default createStore({
                     tasks: [
                         {
                             id: 3,
-                            title: 'Design Sprint',
+                            title: 'Meeting with Andy',
                             date: new Date(),
                             done: true,
                             deleted: false
                         },
                         {
                             id: 4,
-                            title: 'Icon Set Design for Mobile App',
+                            title: 'Wash my car',
                             date: new Date(),
                             done: false,
                             deleted: false
                         },
                         {
                             id: 5,
-                            title: 'HTML/CSS Study',
+                            title: 'Work out',
                             date: new Date(),
                             done: false,
                             deleted: false
@@ -76,16 +76,9 @@ export default createStore({
                             id: 6,
                             title: 'Weekly Report',
                             date: new Date(),
-                            done: false,
+                            done: true,
                             deleted: false
-                        },
-                        {
-                            id: 7,
-                            title: 'Design Meeting',
-                            date: new Date(),
-                            done: false,
-                            deleted: false
-                        },
+                        },      
                         {
                             id: 9,
                             title: 'Quick Prototyping',
@@ -116,7 +109,8 @@ export default createStore({
         showScBuilder: false,
 
         selectedMethods: [],
-        methodsBuilderName: ''
+        methodsBuilderName: '',
+        showShow: true
     },
     mutations: {
         setVehicleModel(state, model) {
@@ -194,6 +188,9 @@ export default createStore({
         },
         setBuilderName(state, data) {
             state.methodsBuilderName = data
+        },
+        toggleShowShow(state) {
+            state.showShow = !state.showShow
         },
     },
     getters: {

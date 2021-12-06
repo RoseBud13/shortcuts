@@ -1,0 +1,10 @@
+{
+    "template_name": "flash",
+    "step": [
+        {
+            "step1": {
+                "function": "postFlash"
+            }
+        }
+    ]
+}

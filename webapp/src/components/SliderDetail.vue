@@ -1,7 +1,7 @@
 <template>
   <transition name="show" @enter="handleEnter" @leave="handleLeave">
     <div class="slider-detail" v-if="selected">
-      <app-bar :title="selected.slider.name" @left="unselectSlider" />
+      <app-bar :title="selected.slider.name" @left="unselectSlider(); toggleShowShow()" />
       <slider :slider="selected.slider" :active="true" @close="unselectSlider" />
     </div>
   </transition>
@@ -20,7 +20,7 @@ export default {
     ...mapState(['selected', 'unselect'])
   },
   methods: {
-    ...mapMutations(['unselectSlider']),
+    ...mapMutations(['unselectSlider', 'toggleShowShow']),
     handleEnter (el) {
       Object.assign(el.style, {
         top: `${this.selected.rect.top}px`,

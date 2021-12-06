@@ -38,7 +38,9 @@ export default {
         doExecution() {
             executeTemplate(this.temp).then(response => {
                 console.log(response)
-            })
+            }),
+            setTimeout(() => {this.$message.warning(`Connecting to cars...`);}, 500);
+            setTimeout(() => {this.$message.success(`Shortcuts executed`);}, 3000);
         }
     }
 }
